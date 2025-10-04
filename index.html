@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evactuator în Chișinău și Suburbii, 24/7</title>
+    <link rel="icon" href="https://placehold.co/32x32/1a202c/ffffff?text=E" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        
+        body.mobile-menu-open {
+            overflow: hidden;
+        }
+
+        .nav-link { transition: all 0.3s ease; position: relative; }
+        .nav-link.active::after {
+            content: ''; position: absolute; left: 50%; bottom: -8px; width: 80%; height: 4px;
+            background-color: #1e40af; border-radius: 9999px; transform: translateX(-50%);
+            animation: fadeInScale 0.3s forwards;
+        }
+        @keyframes fadeInScale { from { transform: translateX(-50%) scaleX(0); opacity: 0; } to { transform: translateX(-50%) scaleX(1); opacity: 1; } }
+        
+        .content-section { display: none; padding: 1rem; padding: 2rem; animation: fadeIn 0.5s ease-in-out; overflow-y: auto; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero Carousel Styles */
+        .hero-carousel-container { position: relative; width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
+        .carousel-slide { position: absolute; width: 90%; height: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2); transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease, z-index 0s 0.4s; cursor: pointer; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .carousel-slide.active { transform: translateX(0) scale(1); opacity: 1; z-index: 10; }
+        .carousel-slide.prev { transform: translateX(-40%) scale(0.8); opacity: 0.5; z-index: 5; }
+        .carousel-slide.next { transform: translateX(40%) scale(0.8); opacity: 0.5; z-index: 5; }
+        .carousel-slide.hidden-prev { transform: translateX(-80%) scale(0.6); opacity: 0; z-index: 1; }
+        .carousel-slide.hidden-next { transform: translateX(80%) scale(0.6); opacity: 0; z-index: 1; }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background-color: rgba(255, 255, 255, 0.7); border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .carousel-arrow:hover { background-color: rgba(255, 255, 255, 1); transform: translateY(-50%) scale(1.1); }
+        .arrow-left { left: 2%; }
+        .arrow-right { right: 2%; }
+        
+        @media (min-width: 768px) {
+            .hero-carousel-container { height: 60vh; }
+            .carousel-slide { width: 70%; }
+            .arrow-left { left: 5%; }
+            .arrow-right { right: 5%; }
+        }
+
+        /* Attribute Cards */
+        .attribute-card {
+            background-color: #ffffff; border-radius: 1rem; padding: 2rem 1.5rem;
+            text-align: center; border: 2px solid transparent; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            opacity: 0; animation: fadeInUp 0.5s ease-out forwards;
+        }
+        .attribute-card:hover { transform: translateY(-10px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #34D399; }
+        .attribute-card .icon { font-size: 3rem; margin: 0 auto 1.25rem auto; color: #10B981; }
+        .attribute-card h4 { font-size: 1.125rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; }
+        .attribute-card p { font-size: 0.9rem; line-height: 1.5; color: #4b5563; }
+        .attribute-card:nth-child(1) { animation-delay: 0.1s; }
+        .attribute-card:nth-child(2) { animation-delay: 0.2s; }
+        .attribute-card:nth-child(3) { animation-delay: 0.3s; }
+        .attribute-card:nth-child(4) { animation-delay: 0.4s; }
+        .attribute-card:nth-child(5) { animation-delay: 0.5s; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Service Cards Styles */
+        .service-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            text-align: left;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.1);
+            border-color: #3b82f6;
+        }
+        .service-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1e40af;
+            display: inline-block;
+        }
+        .service-card h4 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+        .service-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        /* Assistant Avatar */
+        .assistant-container { position: fixed; bottom: 1rem; right: 1rem; z-index: 50; display: flex; flex-direction: column; align-items: center; }
+        .assistant-avatar { cursor: pointer; position: relative; }
+        .rotating-border { position: relative; border-radius: 9999px; padding: 4px; overflow: hidden; }
+        .rotating-border::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 150%; height: 150%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #F97316 100%);
+            animation: spin-light 4s linear infinite; transform-origin: center center; transform: translate(-50%, -50%); z-index: 1;
+        }
+        @keyframes spin-light { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        .dot { position: absolute; top: 0; right: 0; width: 10px; height: 10px; border-radius: 50%; background-color: #22c55e; border: 2px solid #fff; z-index: 3;}
+        .social-icons { display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 1rem; }
+        .social-item { display: flex; align-items: center; margin-top: 12px; opacity: 0; transform: translateX(20px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .social-icon { width: 48px; height: 48px; transition: transform 0.3s ease; display: flex; justify-content: center; align-items: center; }
+        .social-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .social-icon img[alt="Telegram"] { width: 80%; height: 80%; }
+        .social-icon:hover { transform: scale(1.15); }
+        .social-label { margin-right: 1rem; font-weight: bold; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+        .assistant-container.active .social-item { opacity: 1; transform: translateX(0); }
+        .assistant-container.active .social-item:nth-child(1) { transition-delay: 0.1s; }
+        .assistant-container.active .social-item:nth-child(2) { transition-delay: 0.2s; }
+        .assistant-container.active .social-item:nth-child(3) { transition-delay: 0.3s; }
+        .comic-bubble {
+            position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%) scale(0); transform-origin: bottom center;
+            background-color: white; color: #1f2937; padding: 0.75rem 1.25rem; border-radius: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; font-weight: 600; white-space: nowrap;
+            opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none;
+        }
+        .comic-bubble::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid white;
+        }
+        .comic-bubble.show { opacity: 1; transform: translateX(-50%) scale(1); }
+
+        /* Call Us Button & Phone Icon Animation */
+        .call-us-button {
+            background-color: #F97316; color: white; padding: 0.75rem 1.5rem; border-radius: 9999px;
+            font-weight: 700; display: flex; align-items: center; transition: transform 0.3s ease-in-out;
+        }
+        .call-us-button:hover { transform: scale(1.05); }
+        .call-us-button .fa-phone { display: inline-block; margin-right: 0.75rem; animation: shake-phone 2s ease-in-out infinite; }
+        .call-us-button:hover .fa-phone { animation-play-state: paused; }
+        .mobile-phone-icon { animation: shake-phone 2s ease-in-out infinite; }
+        
+        @keyframes shake-phone {
+            0%, 100% { transform: rotate(0); } 10%, 30%, 50%, 70% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); } 90% { transform: rotate(0); }
+        }
+        
+        /* Calculator Styles */
+        .calculator-card {
+            background: linear-gradient(145deg, #ffffff, #f7f8fa); padding: 1.5rem; padding: 2.5rem; border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Towing Truck Animation Styles */
+        #loaderContainer { position: relative; width: 100%; height: 100px; overflow: hidden; }
+        #counter {
+            position: absolute; top: 50%; left: 50px; transform: translateY(-50%); display: none;
+            color: #1f2937; user-select: none; font-family: 'Orbitron', monospace; font-weight: 700;
+            font-size: 19px; letter-spacing: 0.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        #loaderTruckImage {
+            position: absolute; top: 50%; right: -100px; transform: translateY(-50%);
+            width: 80px; height: auto; display: none;
+        }
+
+        /* Custom Dropdown Styles */
+        .custom-select-container { position: relative; }
+        .custom-select-options {
+            position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 30;
+            background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb; max-height: 200px; overflow-y: auto; opacity: 0;
+            transform: scaleY(0.95); transform-origin: top; transition: all 0.2s ease-out; pointer-events: none;
+        }
+        .custom-select-container.open .custom-select-options { opacity: 1; transform: scaleY(1); pointer-events: auto; }
+        .custom-select-option { padding: 0.75rem 1rem; cursor: pointer; transition: background-color 0.2s ease; }
+        .custom-select-option:hover, .custom-select-option.selected { background-color: #f0f3ff; }
+        .custom-select-option.selected { font-weight: 600; color: #1e40af; }
+        .custom-select-trigger {
+            background-color: white;
+            transition: background-color 0.2s ease;
+        }
+        .custom-select-trigger:disabled {
+             background-color: #f3f4f6; /* bg-gray-100 */
+             cursor: not-allowed;
+             opacity: 0.7;
+        }
+        .custom-select-trigger .fa-chevron-down { transition: transform 0.3s ease; }
+        .custom-select-container.open .custom-select-trigger .fa-chevron-down { transform: rotate(180deg); }
+
+        /* Driver Status LED Styles */
+        .status-display {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            border: 1px solid #e5e7eb;
+        }
+        .status-led {
+            width: 12px; height: 12px; border-radius: 9999px;
+            border: 1px solid rgba(0,0,0,0.1);
+            margin-right: 6px;
+        }
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .pulse-normal { animation: pulse-scale 1.5s ease-in-out infinite; }
+        .pulse-slow { animation: pulse-scale 3s ease-in-out infinite; }
+        .pulse-fast { animation: pulse-scale 0.75s ease-in-out infinite; }
+
+        /* Other Styles */
+        .gallery-image { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .gallery-image:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2); }
+        .button-hover-effect { position: relative; z-index: 1; overflow: hidden; }
+        .button-hover-effect:before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.4)); transition: all 0.3s ease-in-out; transform: scaleX(0); transform-origin: left; z-index: -1; }
+        .button-hover-effect:hover:before { transform: scaleX(1); }
+        .toggle-switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #2196F3; }
+        input:checked + .slider:before { transform: translateX(26px); }
+    </style>
+    <style>
+        /* Footer Styles */
+        .footer {
+            background-color: #111827;
+            color: #9ca3af;
+            padding: 2.5rem 1rem; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .footer-section h4 { font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 1rem; }
+        .footer-section p, .footer-section a { font-size: 0.9rem; line-height: 1.5; color: #d1d5db; text-decoration: none; transition: color 0.3s ease; }
+        .footer-section a:hover { color: #ffffff; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .social-icons-row { display: flex; gap: 1.5rem; margin-top: 1rem; }
+        .social-icon-link { font-size: 1.5rem; color: #9ca3af; transition: color 0.3s ease, transform 0.3s ease; }
+        .social-icon-link:hover { color: #ffffff; transform: scale(1.1); }
+        .footer-copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Mobile Menu Styles */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Page Overlay for Assistant */
+        #page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(31, 41, 55, 0.5); /* bg-gray-800 with 50% opacity */
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px); /* For Safari support */
+            z-index: 49;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #page-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-40">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" data-section="home" class="nav-link">
+                <h1 class="text-2xl md:text-3xl font-extrabold text-blue-800 tracking-tight">Evacuator247</h1>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <ul class="flex space-x-8">
+                    <li><a href="#" data-section="home" class="nav-link font-medium text-gray-600 hover:text-gray-900 active">Acasă</a></li>
+                    <li><a href="#" data-section="services" class="nav-link font-medium text-gray-600 hover:text-gray-900">Servicii</a></li>
+                    <li><a href="#" data-section="gallery" class="nav-link font-medium text-gray-600 hover:text-gray-900">Galerie</a></li>
+                    <li><a href="#" data-section="flota" class="nav-link font-medium text-gray-600 hover:text-gray-900">Flotă</a></li>
+                    <li><a href="#" data-section="recenzii" class="nav-link font-medium text-gray-600 hover:text-gray-900">Recenzii</a></li>
+                    <li><a href="#" data-section="calculator" class="nav-link font-medium text-gray-600 hover:text-gray-900">Calculator Tarif</a></li>
+                </ul>
+                <a href="tel:068223614" class="call-us-button">
+                    <i class="fas fa-phone"></i>
+                    <span>068223614</span>
+                </a>
+            </nav>
+
+            <!-- Mobile Right-Side Controls -->
+            <div class="lg:hidden flex items-center space-x-4">
+                <a href="tel:068223614" class="text-gray-800 hover:text-blue-800">
+                    <i class="fas fa-phone text-2xl mobile-phone-icon"></i>
+                </a>
+                <button id="mobile-menu-button" class="text-gray-800 hover:text-blue-800 focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-full max-w-xs bg-white shadow-lg z-50 p-8 lg:hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-blue-800">Meniu</h2>
+            <button id="mobile-menu-close-button" class="text-gray-600 hover:text-gray-900">
+                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="#" data-section="home" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Acasă</a>
+            <a href="#" data-section="services" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Servicii</a>
+            <a href="#" data-section="gallery" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Galerie</a>
+            <a href="#" data-section="flota" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Flotă</a>
+            <a href="#" data-section="recenzii" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Recenzii</a>
+            <a href="#" data-section="calculator" class="mobile-nav-link text-lg text-gray-700 hover:text-blue-800 font-semibold">Calculator Tarif</a>
+            <a href="tel:068223614" class="call-us-button mt-4">
+                <i class="fas fa-phone"></i>
+                <span>068223614</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="container mx-auto px-4 lg:px-12 pt-8">
+                <div class="hero-carousel-container">
+                    <div class="carousel-slide" data-index="0"><img src="HeroImage1.jpg" alt="Hero Image 1" /></div>
+                    <div class="carousel-slide" data-index="1"><img src="HeroImage2.jpg" alt="Hero Image 2" /></div>
+                    <div class="carousel-slide" data-index="2"><img src="HeroImage3.jpg" alt="Hero Image 3" /></div>
+                    <div class="carousel-slide" data-index="3"><img src="HeroImage4.jpg" alt="Hero Image 4" /></div>
+                    <div class="carousel-arrow arrow-left"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></div>
+                    <div class="carousel-arrow arrow-right"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+                </div>
+                <div class="mt-12 md:mt-16 mb-10">
+                    <h3 class="text-2xl font-extrabold text-gray-900 text-center mb-10">De ce noi?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        <div class="attribute-card"><i class="fas fa-headset icon"></i><h4>Asistență 24/7</h4><p>Zi sau noapte, echipa noastră este mereu gata de intervenție.</p></div>
+                        <div class="attribute-card"><i class="fas fa-globe-americas icon"></i><h4>Acoperire Internațională</h4><p>Serviciile noastre se extind și peste hotare.</p></div>
+                        <div class="attribute-card"><i class="fas fa-file-invoice-dollar icon"></i><h4>Transparență</h4><p>Fără taxe ascunse. Oferim prețuri clare, de la bun început.</p></div>
+                        <div class="attribute-card"><i class="fas fa-truck-pickup icon"></i><h4>Echipament Profesional</h4><p>Folosim autospeciale performante și sigure.</p></div>
+                        <div class="attribute-card"><i class="fas fa-motorcycle icon"></i><h4>Evacuări Versatile</h4><p>De la motociclete la SUV-uri, transportăm o gamă largă de vehicule în siguranță.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="content-section">
+            <div class="container mx-auto p-4 lg:p-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4">Serviciile Noastre</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Oferim o gamă largă de servicii profesionale de tractare și transport. Misiunea noastră este să oferim soluții rapide, fiabile și transparente pentru toate nevoile vehiculului dumneavoastră.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card">
+                        <i class="fas fa-truck-pickup icon"></i>
+                        <h4>Tractări Complete</h4>
+                        <p>Preluăm orice, de la motociclete și autoturisme, la SUV-uri și vehicule comerciale ușoare. Serviciile noastre includ tractări standard, recuperare în caz de accident și transport specializat pe platformă pentru mașini sport, mașini de epocă sau vehicule cu tracțiune integrală, pentru a asigura o manevrare fără daune.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="service-card">
+                        <i class="fas fa-tags icon"></i>
+                        <h4>Prețuri transparente</h4>
+                        <p>Prețurile noastre sunt simple și clare. Tarifele se bazează pe greutatea vehiculului (MOTO/ATV, &lt;2000kg, &gt;2000kg) și pe distanța totală dus-întors. Serviciile suplimentare, cum ar fi manevrarea unui vehicul avariat, au taxe fixe și clare. Folosiți calculatorul nostru pentru o estimare instantanee și onestă.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="service-card">
+                        <i class="fas fa-globe-europe icon"></i>
+                        <h4>Național & Internațional</h4>
+                        <p>Acoperirea noastră se extinde în toate raioanele Republicii Moldova. De asemenea, suntem specializați în tractări pe distanțe lungi, transfrontaliere, către țări vecine precum România și Ucraina. Gestionăm toată logistica pentru a ne asigura că vehiculul dumneavoastră ajunge la destinația internațională în siguranță și la timp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="content-section">
+            <div class="container mx-auto p-4 lg:p-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-8">Galerie Foto</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                    <img src="gallery1.jpeg" alt="Imagine Galerie 1" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery2.jpeg" alt="Imagine Galerie 2" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery3.jpeg" alt="Imagine Galerie 3" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery4.jpeg" alt="Imagine Galerie 4" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery5.jpeg" alt="Imagine Galerie 5" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery6.jpeg" alt="Imagine Galerie 6" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery7.jpeg" alt="Imagine Galerie 7" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery8.jpeg" alt="Imagine Galerie 8" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery9.jpeg" alt="Imagine Galerie 9" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="gallery10.jpeg" alt="Imagine Galerie 10" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Fleet Section -->
+        <section id="flota" class="content-section">
+            <div class="container mx-auto p-4 lg:p-10">
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                    <!-- Driver Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center max-w-sm">
+                        <img src="driver1.png" alt="Șofer 1" class="w-32 h-32 rounded-full mb-4 object-cover border-4 border-blue-800" />
+                        <div class="flex items-center justify-center gap-x-3 mb-2">
+                             <h3 class="text-xl md:text-2xl font-bold text-gray-900">Daniel</h3>
+                             <div id="driver-1-status" class="status-display">
+                                <span class="status-led bg-white"></span>
+                                <span class="text-xs font-semibold text-black">Se încarcă...</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-500 mb-2">068223614</p>
+                        <p class="text-gray-700 font-light">Fondator și Șofer Principal</p>
+                    </div>
+                    <!-- Vehicle Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center max-w-sm">
+                        <img src="https://placehold.co/600x400/1e40af/ffffff?text=Mercedes" alt="Mercedes Sprinter" class="w-full h-48 rounded-lg object-cover mb-4" />
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Mercedes Sprinter</h3>
+                        <p class="text-gray-700 mt-1">Anul producerii: 2017</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="recenzii" class="content-section">
+            <div class="container mx-auto p-4 lg:p-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4">Recenziile Clienților Noștri</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Ne mândrim cu încrederea pe care clienții ne-o acordă. Fiecare recenzie este o dovadă a profesionalismului și dedicării echipei noastre. Vă invităm să parcurgeți mărturiile celor care au apelat la serviciile Evacuator247 și s-au convins de calitatea și promptitudinea intervențiilor noastre.</p>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%201" alt="Recenzie 1" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%202" alt="Recenzie 2" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%203" alt="Recenzie 3" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%204" alt="Recenzie 4" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%205" alt="Recenzie 5" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%206" alt="Recenzie 6" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%207" alt="Recenzie 7" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                    <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%208" alt="Recenzie 8" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Fare Calculator Section -->
+        <section id="calculator" class="content-section">
+            <div class="container mx-auto p-4 flex justify-center">
+                <div class="calculator-card w-full max-w-2xl text-center">
+                    <h2 class="text-2xl font-extrabold text-gray-900 mb-2">Calcul Instant al Tarifului</h2>
+                    <p class="text-gray-500 mb-8">Obțineți o estimare de preț transparentă pentru nevoile dumneavoastră.</p>
+                    <div class="flex items-center justify-center md:justify-end mb-6">
+                        <span class="mr-3 text-sm font-medium text-gray-700">Selectare Locație</span>
+                        <label class="toggle-switch"><input type="checkbox" id="mode-toggle"><span class="slider"></span></label>
+                        <span class="ml-3 text-sm font-medium text-gray-700">Introducere Manuală</span>
+                    </div>
+                    <form id="fareForm" class="space-y-8">
+                        <div>
+                            <div id="select-mode" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Origin Dropdown -->
+                                <div>
+                                    <label for="point-a-trigger" class="block text-sm font-medium text-gray-700 mb-1 text-left">Punctul A (Origine)</label>
+                                    <div id="custom-select-a" class="custom-select-container">
+                                        <button type="button" id="point-a-trigger" data-value="" class="custom-select-trigger w-full flex justify-between items-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-800 sm:text-sm text-left">
+                                            <span class="text-gray-500">Selectați o origine...</span>
+                                            <i class="fas fa-chevron-down text-gray-400"></i>
+                                        </button>
+                                        <div id="point-a-options" class="custom-select-options"></div>
+                                    </div>
+                                </div>
+                                <!-- Destination Dropdown -->
+                                <div>
+                                    <label for="point-b-trigger" class="block text-sm font-medium text-gray-700 mb-1 text-left">Punctul B (Destinație)</label>
+                                    <div id="custom-select-b" class="custom-select-container">
+                                        <button type="button" id="point-b-trigger" data-value="" class="custom-select-trigger w-full flex justify-between items-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-800 sm:text-sm text-left" disabled>
+                                            <span class="text-gray-500">Mai întâi alegeți originea...</span>
+                                            <i class="fas fa-chevron-down text-gray-400"></i>
+                                        </button>
+                                        <div id="point-b-options" class="custom-select-options"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="manual-mode" class="hidden">
+                                <label for="manual-distance" class="block text-sm font-medium text-gray-700 mb-1 text-left">Distanța (km)</label>
+                                <input type="number" id="manual-distance" name="manual-distance" step="0.1" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-800 focus:border-blue-800 sm:text-sm" placeholder="ex: 100">
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Tipul Vehiculului</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                                <div><input type="radio" name="vehicle-type" id="moto" value="9" class="hidden peer" checked><label for="moto" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-800 peer-checked:ring-2 peer-checked:ring-blue-800 transition-all hover:border-gray-400"><i class="fas fa-motorcycle text-3xl mb-2 text-blue-800"></i><span class="text-sm font-semibold block">MOTO / ATV</span><span class="text-xs text-gray-500 block">9 MDL/km</span></label></div>
+                                <div><input type="radio" name="vehicle-type" id="small-car" value="10" class="hidden peer"><label for="small-car" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-800 peer-checked:ring-2 peer-checked:ring-blue-800 transition-all hover:border-gray-400"><i class="fas fa-car-side text-3xl mb-2 text-blue-800"></i><span class="text-sm font-semibold block">&lt; 2000 kg</span><span class="text-xs text-gray-500 block">10 MDL/km</span></label></div>
+                                <div><input type="radio" name="vehicle-type" id="big-car" value="11" class="hidden peer"><label for="big-car" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-800 peer-checked:ring-2 peer-checked:ring-blue-800 transition-all hover:border-gray-400"><i class="fas fa-truck text-3xl mb-2 text-blue-800"></i><span class="text-sm font-semibold block">&gt; 2000 kg</span><span class="text-xs text-gray-500 block">11 MDL/km</span></label></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+                            <label for="is-damaged" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-damaged" name="is-damaged" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicol avariat</span></div></label>
+                            <label for="is-automatic" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-automatic" name="is-automatic" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicol blocat</span></div></label>
+                        </div>
+                        <button type="submit" id="calculateBtn" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-200 button-hover-effect disabled:opacity-50 disabled:cursor-not-allowed" disabled>Calculează Tariful</button>
+                    </form>
+                    <div id="loaderContainer" class="hidden w-full my-8">
+                        <div id="counter">0%</div>
+                        <img id="loaderTruckImage" src="icon.png" alt="Se calculează..." />
+                    </div>
+                    <div id="resultContainer" class="hidden my-8">
+                        <p id="resultText" class="text-2xl md:text-3xl font-bold text-gray-800"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Page Overlay -->
+    <div id="page-overlay"></div>
+
+    <!-- Assistant Avatar -->
+    <div id="assistantContainer" class="assistant-container">
+        <div class="social-icons">
+            <div class="social-item"><b class="social-label">WhatsApp</b><a href="https://wa.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="whatsapp.png" alt="WhatsApp"></a></div>
+            <div class="social-item"><b class="social-label">Telegram</b><a href="https://t.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="telegram.png" alt="Telegram"></a></div>
+            <div class="social-item"><b class="social-label">Viber</b><a href="viber://chat?number=%2B37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="viber.png" alt="Viber"></a></div>
+        </div>
+        <div id="assistantAvatar" class="assistant-avatar">
+            <div id="comicBubble" class="comic-bubble">Contactează-ne oriunde!</div>
+            <div class="rotating-border"><div class="relative w-16 h-16 rounded-full border-4 border-orange-500 p-1 bg-white" style="z-index: 2;"><img src="avatar1.png" alt="Avatar Asistent" class="rounded-full"><div class="dot"></div></div></div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Despre Evacuator247</h4>
+                <p>Evacuator247 este dedicat furnizării celor mai bune servicii din industrie. Echipa noastră de profesioniști cu experiență este întotdeauna gata să vă ajute.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Linkuri Rapide</h4>
+                <ul class="footer-links">
+                    <li><a href="#" data-section="home">Acasă</a></li>
+                    <li><a href="#" data-section="services">Servicii</a></li>
+                    <li><a href="#" data-section="gallery">Galerie</a></li>
+                    <li><a href="#" data-section="flota">Flotă</a></li>
+                    <li><a href="#" data-section="recenzii">Recenzii</a></li>
+                    <li><a href="#" data-section="calculator">Calculator Tarif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contactează-ne</h4>
+                <p><i class="fas fa-phone mr-2"></i> 068223614</p>
+                <p><i class="fas fa-envelope mr-2"></i> contact@evacuator247.com</p>
+                <div class="social-icons-row">
+                    <a href="https://www.tiktok.com/@YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/YOUR_PAGE_OR_PROFILE" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2025 Evacuator247. Toate drepturile rezervate. Creat de [Numele Companiei Tale].</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- GENERAL PAGE SETUP ---
+            const navLinks = document.querySelectorAll('.nav-link, .footer-links a');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            const sections = document.querySelectorAll('.content-section');
+            const assistantContainer = document.getElementById('assistantContainer');
+            const assistantAvatar = document.getElementById('assistantAvatar');
+            const comicBubble = document.getElementById('comicBubble');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+            const pageOverlay = document.getElementById('page-overlay');
+
+            // --- CALCULATOR-SPECIFIC ELEMENTS ---
+            const fareForm = document.getElementById('fareForm');
+            const resultText = document.getElementById('resultText');
+            const modeToggle = document.getElementById('mode-toggle');
+            const selectModeDiv = document.getElementById('select-mode');
+            const manualModeDiv = document.getElementById('manual-mode');
+            const customSelectA = document.getElementById('custom-select-a');
+            const pointA_Trigger = document.getElementById('point-a-trigger');
+            const pointA_OptionsContainer = document.getElementById('point-a-options');
+            const customSelectB = document.getElementById('custom-select-b');
+            const pointB_Trigger = document.getElementById('point-b-trigger');
+            const pointB_OptionsContainer = document.getElementById('point-b-options');
+            const manualDistanceInput = document.getElementById('manual-distance');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const loaderContainer = document.getElementById('loaderContainer');
+            const resultContainer = document.getElementById('resultContainer');
+            const counterEl = document.getElementById('counter');
+            const truckEl = document.getElementById('loaderTruckImage');
+
+            // --- MOBILE MENU ---
+            const openMenu = () => { mobileMenu.classList.add('open'); document.body.classList.add('mobile-menu-open'); };
+            const closeMenu = () => { mobileMenu.classList.remove('open'); document.body.classList.remove('mobile-menu-open'); };
+            mobileMenuButton.addEventListener('click', openMenu);
+            mobileMenuCloseButton.addEventListener('click', closeMenu);
+
+            // --- AUDIO & BUBBLE NOTIFICATION ---
+            let audioCtx;
+            const initAudioContext = () => { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } };
+            document.body.addEventListener('click', initAudioContext, { once: true });
+            document.body.addEventListener('touchstart', initAudioContext, { once: true });
+            function playNotificationSound() { if (!audioCtx) return; const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.type = 'sine'; o.frequency.setValueAtTime(600, audioCtx.currentTime); g.gain.setValueAtTime(0.5, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3); o.start(audioCtx.currentTime); o.stop(audioCtx.currentTime + 0.3); }
+            setTimeout(() => { comicBubble.classList.add('show'); playNotificationSound(); setTimeout(() => { comicBubble.classList.remove('show'); }, 5000); }, 5000);
+
+            // --- NAVIGATION ---
+            const handleLinkClick = (e) => {
+                e.preventDefault();
+                const t = e.currentTarget.getAttribute('data-section');
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                sections.forEach(sec => sec.classList.remove('active'));
+                document.getElementById(t).classList.add('active');
+                const desktopLink = document.querySelector(`.nav-link[data-section="${t}"]`);
+                if(desktopLink) desktopLink.classList.add('active');
+                window.scrollTo(0, 0);
+                closeMenu();
+            };
+            navLinks.forEach(link => link.addEventListener('click', handleLinkClick));
+            mobileNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
+
+            // --- HERO CAROUSEL ---
+            const slides = document.querySelectorAll('.carousel-slide');
+            let currentSlide = 0, autoSlideInterval;
+            const updateSlides = () => { slides.forEach((s, i) => { s.classList.remove('active', 'prev', 'next', 'hidden-prev', 'hidden-next'); if (i === currentSlide) s.classList.add('active'); else if (i === (currentSlide - 1 + slides.length) % slides.length) s.classList.add('prev'); else if (i === (currentSlide + 1) % slides.length) s.classList.add('next'); else if (i === (currentSlide - 2 + slides.length) % slides.length) s.classList.add('hidden-prev'); else s.classList.add('hidden-next'); }); };
+            const nextSlide = () => { currentSlide = (currentSlide + 1) % slides.length; updateSlides(); };
+            const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 10000); };
+            document.querySelector('.arrow-right').addEventListener('click', () => { nextSlide(); clearInterval(autoSlideInterval); startAutoSlide(); });
+            document.querySelector('.arrow-left').addEventListener('click', () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); clearInterval(autoSlideInterval); startAutoSlide(); });
+            updateSlides(); startAutoSlide();
+
+            // --- ASSISTANT AVATAR ---
+            const toggleAssistant = () => {
+                assistantContainer.classList.toggle('active');
+                pageOverlay.classList.toggle('active');
+                if (comicBubble.classList.contains('show')) comicBubble.classList.remove('show');
+            };
+            assistantAvatar.addEventListener('click', toggleAssistant);
+            pageOverlay.addEventListener('click', toggleAssistant);
+
+            // --- FARE CALCULATOR NEW LOGIC ---
+
+            // Function to reset and disable the destination dropdown
+            const resetDestinationsDropdown = () => {
+                pointB_Trigger.disabled = true;
+                pointB_Trigger.dataset.value = '';
+                pointB_Trigger.querySelector('span').textContent = 'Mai întâi alegeți originea...';
+                pointB_Trigger.querySelector('span').classList.add('text-gray-500');
+                pointB_OptionsContainer.innerHTML = '';
+            };
+            
+            // Populate the Origin (Point A) dropdown from the manifest file
+            async function populateOrigins() {
+                try {
+                    const response = await fetch('Resources/Distances/_manifest.json');
+                    if (!response.ok) throw new Error('Nu s-au putut încărca originile.');
+                    const origins = await response.json();
+                    origins.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    pointA_OptionsContainer.innerHTML = '';
+                    origins.forEach(origin => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'custom-select-option';
+                        optionDiv.textContent = origin.name;
+                        optionDiv.dataset.file = origin.file; // Store filename
+                        pointA_OptionsContainer.appendChild(optionDiv);
+                    });
+                } catch (error) {
+                    console.error('Eroare la popularea originilor:', error);
+                    pointA_Trigger.querySelector('span').textContent = 'Eroare la încărcare';
+                    pointA_Trigger.disabled = true;
+                }
+            }
+
+            // Populate the Destination (Point B) dropdown based on the selected origin
+            async function populateDestinations(originFile) {
+                resetDestinationsDropdown();
+                pointB_Trigger.querySelector('span').textContent = 'Se încarcă...';
+
+                try {
+                    const response = await fetch(`Resources/Distances/${originFile}`);
+                    if (!response.ok) throw new Error('Fișierul de destinații nu a fost găsit.');
+                    const data = await response.json();
+                    
+                    data.destinations.sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    pointB_OptionsContainer.innerHTML = '';
+                    data.destinations.forEach(dest => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'custom-select-option';
+                        optionDiv.textContent = dest.name;
+                        optionDiv.dataset.value = dest.distance_km; // Store the distance directly
+                        pointB_OptionsContainer.appendChild(optionDiv);
+                    });
+                    
+                    pointB_Trigger.disabled = false;
+                    pointB_Trigger.querySelector('span').textContent = 'Selectați o destinație...';
+                } catch (error) {
+                     console.error('Eroare la încărcarea destinațiilor:', error);
+                     pointB_Trigger.querySelector('span').textContent = 'Eroare';
+                }
+            }
+
+            // Event listener for Origin (Point A) selection
+            pointA_OptionsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('custom-select-option')) {
+                    const selectedFile = e.target.dataset.file;
+                    const selectedText = e.target.textContent;
+                    
+                    pointA_Trigger.dataset.value = selectedFile;
+                    pointA_Trigger.querySelector('span').textContent = selectedText;
+                    pointA_Trigger.querySelector('span').classList.remove('text-gray-500');
+                    
+                    document.querySelectorAll('#point-a-options .custom-select-option').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    customSelectA.classList.remove('open');
+                    
+                    populateDestinations(selectedFile);
+                    validateFareForm();
+                }
+            });
+
+            // Event listener for Destination (Point B) selection
+            pointB_OptionsContainer.addEventListener('click', (e) => {
+                 if (e.target.classList.contains('custom-select-option')) {
+                    const selectedValue = e.target.dataset.value;
+                    const selectedText = e.target.textContent;
+
+                    pointB_Trigger.dataset.value = selectedValue;
+                    pointB_Trigger.querySelector('span').textContent = selectedText;
+                    pointB_Trigger.querySelector('span').classList.remove('text-gray-500');
+                    
+                    document.querySelectorAll('#point-b-options .custom-select-option').forEach(opt => opt.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    customSelectB.classList.remove('open');
+                    
+                    validateFareForm();
+                }
+            });
+
+            // Toggle dropdown visibility
+            pointA_Trigger.addEventListener('click', (e) => { e.stopPropagation(); customSelectA.classList.toggle('open'); });
+            pointB_Trigger.addEventListener('click', (e) => { e.stopPropagation(); customSelectB.classList.toggle('open'); });
+            document.addEventListener('click', () => {
+                customSelectA.classList.remove('open');
+                customSelectB.classList.remove('open');
+            });
+
+            const validateFareForm = () => {
+                const isManualMode = modeToggle.checked;
+                let isValid = false;
+                if (isManualMode) {
+                    const distance = parseFloat(manualDistanceInput.value);
+                    isValid = !isNaN(distance) && distance > 0;
+                } else {
+                    isValid = pointA_Trigger.dataset.value !== "" && pointB_Trigger.dataset.value !== "";
+                }
+                calculateBtn.disabled = !isValid;
+            };
+
+            modeToggle.addEventListener('change', () => {
+                if (modeToggle.checked) {
+                    selectModeDiv.classList.add('hidden');
+                    manualModeDiv.classList.remove('hidden');
+                } else {
+                    selectModeDiv.classList.remove('hidden');
+                    manualModeDiv.classList.add('hidden');
+                }
+                resultContainer.classList.add('hidden');
+                validateFareForm();
+            });
+            
+            manualDistanceInput.addEventListener('input', validateFareForm);
+
+            function runTowingAnimation() { return new Promise(resolve => { counterEl.style.display = 'block'; truckEl.style.display = 'block'; const containerWidth = loaderContainer.offsetWidth; let truckPos_fromLeft = containerWidth; const counterStartPos_fromLeft = 50; let counterValue = 0; let isTowing = false; const totalDuration = 3000, approachDuration = totalDuration * 0.3, loadingDuration = totalDuration * 0.7; const frameRate = 60, frameInterval = 1000 / frameRate; const approachFrames = approachDuration / frameInterval, loadingFrames = loadingDuration / frameInterval; const hookOffset = 120, targetPosition_fromLeft = counterStartPos_fromLeft + hookOffset; let frameCount = 0; const animation = setInterval(() => { frameCount++; if (!isTowing) { const progress = frameCount / approachFrames; const easeProgress = 1 - Math.pow(1 - progress, 3); truckPos_fromLeft = containerWidth - (containerWidth - targetPosition_fromLeft) * easeProgress; truckEl.style.right = (containerWidth - truckPos_fromLeft) + 'px'; if (frameCount >= approachFrames) { isTowing = true; frameCount = 0; } } else { const progress = frameCount / loadingFrames; counterValue = Math.min(100, progress * 100); counterEl.textContent = Math.round(counterValue) + '%'; const currentPos_fromLeft = targetPosition_fromLeft + (containerWidth - targetPosition_fromLeft + hookOffset) * progress; counterEl.style.left = (currentPos_fromLeft - hookOffset) + 'px'; truckEl.style.right = (containerWidth - currentPos_fromLeft) + 'px'; if (counterValue >= 100 || frameCount >= loadingFrames) { clearInterval(animation); counterEl.textContent = '100%'; setTimeout(() => { counterEl.style.display = 'none'; truckEl.style.display = 'none'; counterEl.style.left = counterStartPos_fromLeft + 'px'; truckEl.style.right = '-100px'; counterEl.textContent = '0%'; resolve(); }, 300); } } }, frameInterval); }); }
+
+            fareForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                calculateBtn.disabled = true;
+                calculateBtn.textContent = 'Se calculează...';
+                resultContainer.classList.add('hidden');
+                loaderContainer.classList.remove('hidden');
+
+                await runTowingAnimation();
+
+                const isManualMode = modeToggle.checked;
+                const distance = isManualMode ? parseFloat(manualDistanceInput.value) : parseFloat(pointB_Trigger.dataset.value);
+                
+                const rate = parseFloat(document.querySelector('input[name="vehicle-type"]:checked').value);
+                const damagedFee = document.getElementById('is-damaged').checked ? 100 : 0;
+                const transmissionFee = document.getElementById('is-automatic').checked ? 100 : 0;
+                const baseFare = 100;
+                const totalFare = baseFare + (distance * rate * 2) + damagedFee + transmissionFee;
+
+                resultText.textContent = `Tarif Estimat: ${totalFare.toFixed(2)} MDL`;
+                
+                loaderContainer.classList.add('hidden');
+                resultContainer.classList.remove('hidden');
+                calculateBtn.textContent = 'Calculează Tariful';
+                validateFareForm();
+            });
+            
+            // Initial calls
+            populateOrigins();
+            validateFareForm();
+            
+            // --- DRIVER STATUS ---
+            const statusMap = { 'disponibil': { text: 'Disponibil', color: 'bg-green-500', ledClass: 'pulse-normal' }, 'indisponibil': { text: 'Indisponibil', color: 'bg-red-500', ledClass: '' }, 'cursa-lunga': { text: 'Cursă Lungă', color: 'bg-orange-500', ledClass: 'pulse-slow' }, 'cursa-scurta': { text: 'Cursă Scurtă', color: 'bg-yellow-400', ledClass: 'pulse-fast' }, 'default': { text: 'Necunoscut', color: 'bg-gray-400', ledClass: '' } };
+            async function updateDriverStatus() {
+                const driverId = 1;
+                const statusContainer = document.getElementById(`driver-${driverId}-status`);
+                if (!statusContainer) return;
+                const led = statusContainer.querySelector('.status-led');
+                const text = statusContainer.querySelector('span:last-child');
+                try {
+                    const response = await fetch(`driver${driverId}.json?v=${new Date().getTime()}`);
+                    if (!response.ok) throw new Error('Network response was not ok.');
+                    const data = await response.json();
+                    const statusInfo = statusMap[data.status] || statusMap['default'];
+                    led.className = `status-led ${statusInfo.color} ${statusInfo.ledClass}`;
+                    text.textContent = statusInfo.text;
+                } catch (error) {
+                    console.error(`Could not fetch status for driver ${driverId}:`, error);
+                    const errorInfo = statusMap['default'];
+                    led.className = `status-led ${errorInfo.color}`;
+                    text.textContent = 'Eroare';
+                }
+            }
+            updateDriverStatus();
+            setInterval(updateDriverStatus, 30000);
+        });
+    </script>
+
+</body>
+</html>
