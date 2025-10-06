@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evactuator în Chișinău și Suburbii, 24/7</title>
+    <title>Evacuator non-stop în Chișinău și suburbii.</title>
     <link rel="icon" href="https://placehold.co/32x32/1a202c/ffffff?text=E" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -81,6 +81,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             text-align: left;
+            height: 100%; /* Ensure cards have same height */
         }
         .service-card:hover {
             transform: translateY(-8px);
@@ -106,12 +107,22 @@
         }
 
         /* Assistant Avatar */
-        .assistant-container { position: fixed; bottom: 1rem; right: 1rem; z-index: 50; display: flex; flex-direction: column; align-items: center; }
+        .assistant-container {
+            position: fixed; bottom: 1rem; right: 1rem; z-index: 50;
+            display: flex; flex-direction: column; align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .assistant-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .assistant-avatar { cursor: pointer; position: relative; }
         .rotating-border { position: relative; border-radius: 9999px; padding: 4px; overflow: hidden; }
         .rotating-border::before {
             content: ''; position: absolute; top: 50%; left: 50%; width: 150%; height: 150%;
-            background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #F97316 100%);
+            background: conic-gradient(from 0deg, transparent 50%, #FBBF24, #F97316, transparent 80%);
             animation: spin-light 4s linear infinite; transform-origin: center center; transform: translate(-50%, -50%); z-index: 1;
         }
         @keyframes spin-light { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
@@ -128,16 +139,17 @@
         .assistant-container.active .social-item:nth-child(2) { transition-delay: 0.2s; }
         .assistant-container.active .social-item:nth-child(3) { transition-delay: 0.3s; }
         .comic-bubble {
-            position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%) scale(0); transform-origin: bottom center;
+            position: absolute; bottom: 110%; left: 50%; transform: translateX(-65%) scale(0); transform-origin: bottom center;
             background-color: white; color: #1f2937; padding: 0.75rem 1.25rem; border-radius: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; font-weight: 600; white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; font-weight: 600;
             opacity: 0; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none;
+            max-width: 180px; text-align: center;
         }
         .comic-bubble::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            content: ''; position: absolute; bottom: -10px; left: 65%; transform: translateX(-50%);
             width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid white;
         }
-        .comic-bubble.show { opacity: 1; transform: translateX(-50%) scale(1); }
+        .comic-bubble.show { opacity: 1; transform: translateX(-65%) scale(1); }
 
         /* Call Us Button & Phone Icon Animation */
         .call-us-button {
@@ -156,10 +168,18 @@
         
         /* Calculator Styles */
         .calculator-card {
-            background: linear-gradient(145deg, #ffffff, #f7f8fa); padding: 1.5rem; padding: 2.5rem; border-radius: 1.5rem;
+            background: linear-gradient(145deg, #ffffff, #f7f8fa);
+            padding: 1.5rem; /* Reduced padding for mobile */
+            border-radius: 1.5rem;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .calculator-card {
+                padding: 2.5rem; /* Restore padding for larger screens */
+            }
+        }
+
 
         /* Towing Truck Animation Styles */
         #loaderContainer { position: relative; width: 100%; height: 100px; overflow: hidden; }
@@ -218,6 +238,21 @@
         .pulse-normal { animation: pulse-scale 1.5s ease-in-out infinite; }
         .pulse-slow { animation: pulse-scale 3s ease-in-out infinite; }
         .pulse-fast { animation: pulse-scale 0.75s ease-in-out infinite; }
+        
+        /* Service Carousel Responsive Styles */
+        @media (max-width: 767px) { /* Below md breakpoint */
+          #service-carousel-track {
+            display: block; /* Stack cards vertically */
+            transform: none !important; /* Disable JS transform */
+          }
+          #service-carousel-container {
+            overflow: visible; /* Prevent clipping */
+          }
+          #service-carousel-track > div { /* Target the wrapper divs */
+            width: 100%; /* Ensure they take full width */
+            margin-bottom: 1.5rem; /* Add space between stacked cards */
+          }
+        }
 
         /* Other Styles */
         .gallery-image { transition: transform 0.3s ease, box-shadow 0.3s ease; }
@@ -372,7 +407,7 @@
                 <div class="mt-12 md:mt-16 mb-10">
                     <h3 class="text-2xl font-extrabold text-gray-900 text-center mb-10">De ce noi?</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                        <div class="attribute-card"><i class="fas fa-headset icon"></i><h4>Asistență 24/7</h4><p>Zi sau noapte, echipa noastră este mereu gata de intervenție.</p></div>
+                        <div class="attribute-card"><i class="fas fa-headset icon"></i><h4>Asistență 24/24</h4><p>Zi sau noapte, echipa este mereu gata de intervenție.</p></div>
                         <div class="attribute-card"><i class="fas fa-globe-americas icon"></i><h4>Acoperire Internațională</h4><p>Serviciile noastre se extind și peste hotare.</p></div>
                         <div class="attribute-card"><i class="fas fa-file-invoice-dollar icon"></i><h4>Transparență</h4><p>Fără taxe ascunse. Oferim prețuri clare, de la bun început.</p></div>
                         <div class="attribute-card"><i class="fas fa-truck-pickup icon"></i><h4>Echipament Profesional</h4><p>Folosim autospeciale performante și sigure.</p></div>
@@ -384,27 +419,52 @@
 
         <!-- Services Section -->
         <section id="services" class="content-section">
-            <div class="container mx-auto p-4 lg:p-10">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4">Serviciile Noastre</h2>
-                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Oferim o gamă largă de servicii profesionale de tractare și transport. Misiunea noastră este să oferim soluții rapide, fiabile și transparente pentru toate nevoile vehiculului dumneavoastră.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Service Card 1 -->
-                    <div class="service-card">
-                        <i class="fas fa-truck-pickup icon"></i>
-                        <h4>Tractări Complete</h4>
-                        <p>Preluăm orice, de la motociclete și autoturisme, la SUV-uri și vehicule comerciale ușoare. Serviciile noastre includ tractări standard, recuperare în caz de accident și transport specializat pe platformă pentru mașini sport, mașini de epocă sau vehicule cu tracțiune integrală, pentru a asigura o manevrare fără daune.</p>
-                    </div>
-                    <!-- Service Card 2 -->
-                    <div class="service-card">
-                        <i class="fas fa-tags icon"></i>
-                        <h4>Prețuri transparente</h4>
-                        <p>Prețurile noastre sunt simple și clare. Tarifele se bazează pe greutatea vehiculului (MOTO/ATV, &lt;2000kg, &gt;2000kg) și pe distanța totală dus-întors. Serviciile suplimentare, cum ar fi manevrarea unui vehicul avariat, au taxe fixe și clare. Folosiți calculatorul nostru pentru o estimare instantanee și onestă.</p>
-                    </div>
-                    <!-- Service Card 3 -->
-                    <div class="service-card">
-                        <i class="fas fa-globe-europe icon"></i>
-                        <h4>Național & Internațional</h4>
-                        <p>Acoperirea noastră se extinde în toate raioanele Republicii Moldova. De asemenea, suntem specializați în tractări pe distanțe lungi, transfrontaliere, către țări vecine precum România și Ucraina. Gestionăm toată logistica pentru a ne asigura că vehiculul dumneavoastră ajunge la destinația internațională în siguranță și la timp.</p>
+            <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4"></h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Oferim o gamă largă de servicii profesionale de tractare și transport. Misiunea noastră este să oferim soluții rapide, fiabile și transparente pentru toate nevoile vehiculului dumneavoastră.</p>
+                
+                <div id="service-carousel-container" class="relative w-full md:overflow-hidden">
+                    <div id="service-carousel-track" class="md:flex md:-mx-4">
+                        <!-- Service Card 1 -->
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                            <div class="service-card">
+                                <i class="fas fa-truck-pickup icon"></i>
+                                <h4>Tractări complete</h4>
+                                <p>Preluăm orice, de la motociclete și autoturisme, la SUV-uri și vehicule comerciale ușoare. Serviciile noastre includ tractări standard, recuperare în caz de accident și transport specializat pe platformă pentru mașini sport și mașini de epocă. Asigurăm o manevrare fără daune.</p>
+                            </div>
+                        </div>
+                        <!-- Service Card 2 -->
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                            <div class="service-card">
+                                <i class="fas fa-tags icon"></i>
+                                <h4>Prețuri transparente</h4>
+                                <p>Prețurile noastre sunt simple și clare. Tarifele se bazează pe greutatea vehiculului (MOTO/ATV, &lt;2000kg, &gt;2000kg) și pe distanța totală dus-întors. Serviciile suplimentare, cum ar fi manevrarea unui vehicul avariat, au taxe fixe și clare. Folosiți calculatorul nostru pentru o estimare instantanee și onestă.</p>
+                            </div>
+                        </div>
+                        <!-- Service Card 3 -->
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                            <div class="service-card">
+                                <i class="fas fa-globe-europe icon"></i>
+                                <h4>Național & Internațional</h4>
+                                <p>Acoperirem toate raioanele Republicii Moldova. De asemenea, suntem specializați în tractări pe distanțe lungi, transfrontaliere, către țări vecine precum România, Ucraina, Bulgaria sau Ungaria. Gestionăm toată logistica pentru a ne asigura că vehiculul dumneavoastră ajunge la destinație în siguranță și la timp.</p>
+                            </div>
+                        </div>
+                        <!-- Service Card 4 -->
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                           <div class="service-card">
+                                <i class="fas fa-shipping-fast icon"></i>
+                                <h4>Răspuns Imediat 24/7</h4>
+                                <p>Suntem mereu la datorie, indiferent de oră. Având baza în Chișinău, garantăm o intervenție ultra-rapidă. În cazul în care vă aflați în raza orașului sau în suburbiile apropiate, o autospecială poate ajunge la dumneavoastră chiar și în 30 de minute de la apel. Găsim mereu un șofer disponibil pentru a vă oferi ajutorul de care aveți nevoie, prompt și eficient.</p>
+                            </div>
+                        </div>
+                         <!-- Service Card 5 (New) -->
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                           <div class="service-card">
+                                <i class="fas fa-handshake icon"></i>
+                                <h4>Parteneriate B2B & Flote Auto</h4>
+                                <p>Oferim soluții personalizate pentru companiile care dețin flote auto. Încheiați un parteneriat cu noi pentru a beneficia de servicii prioritare și tarife preferențiale pentru toate vehiculele companiei. Asigurăm intervenții rapide pentru a minimiza timpul de inactivitate al mașinilor, fie că este vorba de vehicule de livrare, taxiuri sau mașini corporate. Contactați-ne pentru o ofertă personalizată.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -412,8 +472,8 @@
 
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
-            <div class="container mx-auto p-4 lg:p-10">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-8">Galerie Foto</h2>
+            <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-6">Cazuri reale ale clienților</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
                     <img src="gallery1.jpeg" alt="Imagine Galerie 1" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
                     <img src="gallery2.jpeg" alt="Imagine Galerie 2" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
@@ -458,9 +518,9 @@
 
         <!-- Reviews Section -->
         <section id="recenzii" class="content-section">
-            <div class="container mx-auto p-4 lg:p-10">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4">Recenziile Clienților Noștri</h2>
-                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Ne mândrim cu încrederea pe care clienții ne-o acordă. Fiecare recenzie este o dovadă a profesionalismului și dedicării echipei noastre. Vă invităm să parcurgeți mărturiile celor care au apelat la serviciile Evacuator247 și s-au convins de calitatea și promptitudinea intervențiilor noastre.</p>
+            <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4"></h2>
+                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Ne mândrim cu încrederea pe care clienții ne-o acordă. Fiecare recenzie este o dovadă a profesionalismului și dedicării echipei noastre. Vă invităm să parcurgeți mărturiile celor care au apelat la serviciile Evacuator247 și s-au convins de calitatea intervențiilor noastre.</p>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                     <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%201" alt="Recenzie 1" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
                     <img src="https://placehold.co/400x600/e2e8f0/4a5568?text=Recenzie%20Client%202" alt="Recenzie 2" class="gallery-image w-full aspect-[2/3] object-cover rounded-lg shadow-md" />
@@ -478,7 +538,7 @@
         <section id="calculator" class="content-section">
             <div class="container mx-auto p-4 flex justify-center">
                 <div class="calculator-card w-full max-w-2xl text-center">
-                    <h2 class="text-2xl font-extrabold text-gray-900 mb-2">Calcul Instant al Tarifului</h2>
+                    <h2 class="text-2xl font-extrabold text-gray-900 mb-2"></h2>
                     <p class="text-gray-500 mb-8">Obțineți o estimare de preț transparentă pentru nevoile dumneavoastră.</p>
                     <div class="flex items-center justify-center md:justify-end mb-6">
                         <span class="mr-3 text-sm font-medium text-gray-700">Selectare Locație</span>
@@ -525,10 +585,11 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
-                            <label for="is-damaged" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-damaged" name="is-damaged" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicol avariat</span></div></label>
-                            <label for="is-automatic" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-automatic" name="is-automatic" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicol blocat</span></div></label>
+                            <label for="is-damaged" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-damaged" name="is-damaged" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicul avariat</span></div></label>
+                            <label for="is-automatic" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-automatic" name="is-automatic" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicul blocat</span></div></label>
                         </div>
                         <button type="submit" id="calculateBtn" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-200 button-hover-effect disabled:opacity-50 disabled:cursor-not-allowed" disabled>Calculează Tariful</button>
+                        <p class="text-xs text-gray-500 mt-4 max-w-lg mx-auto">Datele sunt calculate folosind cel mai scurt traseu între cele 2 puncte indicate, prețul final depinde de distanța exactă dintre punctul de pornire și cel de oprire și poate fi ușor diferit (+-10%). Va fi confirmat telefonic.</p>
                     </form>
                     <div id="loaderContainer" class="hidden w-full my-8">
                         <div id="counter">0%</div>
@@ -553,7 +614,7 @@
             <div class="social-item"><b class="social-label">Viber</b><a href="viber://chat?number=%2B37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="viber.png" alt="Viber"></a></div>
         </div>
         <div id="assistantAvatar" class="assistant-avatar">
-            <div id="comicBubble" class="comic-bubble">Contactează-ne oriunde!</div>
+            <div id="comicBubble" class="comic-bubble">Contactează asistentul digital</div>
             <div class="rotating-border"><div class="relative w-16 h-16 rounded-full border-4 border-orange-500 p-1 bg-white" style="z-index: 2;"><img src="avatar1.png" alt="Avatar Asistent" class="rounded-full"><div class="dot"></div></div></div>
         </div>
     </div>
@@ -563,10 +624,10 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Despre Evacuator247</h4>
-                <p>Evacuator247 este dedicat furnizării celor mai bune servicii din industrie. Echipa noastră de profesioniști cu experiență este întotdeauna gata să vă ajute.</p>
+                <p>Suntem partenerul tău de încredere, gata să intervină non-stop, indiferent de situație. Fie că ai nevoie de asistență locală în Chișinău sau transport internațional, echipa noastră de profesioniști îți garantează o soluție rapidă și sigură.</p>
             </div>
             <div class="footer-section">
-                <h4>Linkuri Rapide</h4>
+                <h4></h4>
                 <ul class="footer-links">
                     <li><a href="#" data-section="home">Acasă</a></li>
                     <li><a href="#" data-section="services">Servicii</a></li>
@@ -577,12 +638,12 @@
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Contactează-ne</h4>
+                <h4>Contact</h4>
                 <p><i class="fas fa-phone mr-2"></i> 068223614</p>
                 <p><i class="fas fa-envelope mr-2"></i> contact@evacuator247.com</p>
                 <div class="social-icons-row">
                     <a href="https://www.tiktok.com/@YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/@YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-instagram"></i></a>
                     <a href="https://www.facebook.com/YOUR_PAGE_OR_PROFILE" target="_blank" rel="noopener noreferrer" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
@@ -631,13 +692,17 @@
             mobileMenuButton.addEventListener('click', openMenu);
             mobileMenuCloseButton.addEventListener('click', closeMenu);
 
-            // --- AUDIO & BUBBLE NOTIFICATION ---
+            // --- ASSISTANT & NOTIFICATIONS ---
+            setTimeout(() => {
+                assistantContainer.classList.add('visible');
+            }, 5000);
+
             let audioCtx;
             const initAudioContext = () => { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } };
             document.body.addEventListener('click', initAudioContext, { once: true });
             document.body.addEventListener('touchstart', initAudioContext, { once: true });
             function playNotificationSound() { if (!audioCtx) return; const o = audioCtx.createOscillator(), g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.type = 'sine'; o.frequency.setValueAtTime(600, audioCtx.currentTime); g.gain.setValueAtTime(0.5, audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3); o.start(audioCtx.currentTime); o.stop(audioCtx.currentTime + 0.3); }
-            setTimeout(() => { comicBubble.classList.add('show'); playNotificationSound(); setTimeout(() => { comicBubble.classList.remove('show'); }, 5000); }, 5000);
+            setTimeout(() => { comicBubble.classList.add('show'); playNotificationSound(); setTimeout(() => { comicBubble.classList.remove('show'); }, 5000); }, 6000);
 
             // --- NAVIGATION ---
             const handleLinkClick = (e) => {
@@ -663,6 +728,62 @@
             document.querySelector('.arrow-right').addEventListener('click', () => { nextSlide(); clearInterval(autoSlideInterval); startAutoSlide(); });
             document.querySelector('.arrow-left').addEventListener('click', () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); clearInterval(autoSlideInterval); startAutoSlide(); });
             updateSlides(); startAutoSlide();
+            
+            // --- RESPONSIVE SERVICE CAROUSEL ---
+            const serviceTrack = document.getElementById('service-carousel-track');
+            if (serviceTrack) {
+                const originalCardsHTML = serviceTrack.innerHTML;
+                let serviceCarouselInterval = null;
+
+                const setupServiceCarousel = () => {
+                    // Clear any running interval and reset the HTML to its original state
+                    clearInterval(serviceCarouselInterval);
+                    serviceTrack.innerHTML = originalCardsHTML;
+                    serviceTrack.style.transition = 'none';
+                    serviceTrack.style.transform = 'translateX(0px)';
+
+                    // Only run carousel logic on screens wider than 767px
+                    if (window.innerWidth < 768) {
+                        return;
+                    }
+
+                    const serviceCards = Array.from(serviceTrack.children);
+                    const originalCardCount = serviceCards.length;
+                    const cardsToShow = 3;
+                    let currentServiceIndex = 0;
+
+                    if (originalCardCount > cardsToShow) {
+                        // Clone cards for a seamless loop
+                        const clones = serviceCards.map(card => card.cloneNode(true));
+                        clones.forEach(clone => serviceTrack.appendChild(clone));
+
+                        const advanceCarousel = () => {
+                            currentServiceIndex++;
+                            serviceTrack.style.transition = 'transform 0.8s ease-in-out';
+                            const cardWidth = serviceCards[0].offsetWidth;
+                            const offset = -currentServiceIndex * cardWidth;
+                            serviceTrack.style.transform = `translateX(${offset}px)`;
+
+                            // Reset to the beginning for a seamless loop
+                            if (currentServiceIndex >= originalCardCount) {
+                                setTimeout(() => {
+                                    serviceTrack.style.transition = 'none';
+                                    currentServiceIndex = 0;
+                                    serviceTrack.style.transform = `translateX(0px)`;
+                                }, 800);
+                            }
+                        };
+                        
+                        serviceCarouselInterval = setInterval(advanceCarousel, 10000);
+                    }
+                };
+
+                // Setup on initial load
+                setupServiceCarousel();
+
+                // Re-setup on window resize
+                window.addEventListener('resize', setupServiceCarousel);
+            }
 
             // --- ASSISTANT AVATAR ---
             const toggleAssistant = () => {
