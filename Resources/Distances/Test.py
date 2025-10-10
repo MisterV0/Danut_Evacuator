@@ -4,7 +4,7 @@ import unicodedata
 
 # --- CONFIGURATION ---
 # Change this variable to the name of the file you want to check against all others.
-PRIMARY_FILE_TO_CHECK = "Basarabeasca.json"
+PRIMARY_FILE_TO_CHECK = "Anenii-Noi.json"
 # -------------------
 
 def normalize_name_to_filename(location_name):
