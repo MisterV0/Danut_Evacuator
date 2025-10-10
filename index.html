@@ -54,7 +54,6 @@
             .arrow-right { right: 5%; }
         }
 
-        /* Attribute Cards */
         .attribute-card {
             background-color: #ffffff; border-radius: 1rem; padding: 2rem 1.5rem;
             text-align: center; border: 2px solid transparent; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -72,7 +71,6 @@
         .attribute-card:nth-child(5) { animation-delay: 0.5s; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Service Cards Styles */
         .service-card {
             background-color: #ffffff;
             border-radius: 1rem;
@@ -106,7 +104,6 @@
             color: #4b5563;
         }
 
-        /* Assistant Avatar */
         .assistant-container {
             position: fixed; bottom: 1rem; right: 1rem; z-index: 50;
             display: flex; flex-direction: column; align-items: center;
@@ -217,7 +214,6 @@
         .custom-select-trigger .fa-chevron-down { transition: transform 0.3s ease; }
         .custom-select-container.open .custom-select-trigger .fa-chevron-down { transform: rotate(180deg); }
 
-        /* Driver Status LED Styles */
         .status-display {
             display: flex;
             align-items: center;
@@ -268,7 +264,7 @@
         input:checked + .slider:before { transform: translateX(26px); }
     </style>
     <style>
-        /* Footer Styles */
+      
         .footer {
             background-color: #111827;
             color: #9ca3af;
@@ -302,7 +298,6 @@
             color: #9ca3af;
         }
 
-        /* Mobile Menu Styles */
         #mobile-menu {
             transition: transform 0.3s ease-in-out;
             transform: translateX(100%);
@@ -311,7 +306,6 @@
             transform: translateX(0);
         }
 
-        /* Page Overlay for Assistant */
         #page-overlay {
             position: fixed;
             top: 0;
@@ -330,6 +324,25 @@
             opacity: 1;
             pointer-events: auto;
         }
+
+        #dismiss-drop-zone {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            transform: translateX(-50%) scale(0);
+            pointer-events: none; /* Initially not interactive */
+        }
+        #dismiss-drop-zone.visible {
+            transform: translateX(-50%) scale(1);
+            pointer-events: auto; /* Make it interactive when visible */
+        }
+        #dismiss-drop-zone.hover {
+            transform: translateX(-50%) scale(1.2);
+            background-color: #ef4444; /* red-500 */
+        }
+        .assistant-container.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+            transition: none; /* Disable transitions while dragging */
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
@@ -341,7 +354,6 @@
                 <h1 class="text-2xl md:text-3xl font-extrabold text-blue-800 tracking-tight">Evacuator2424</h1>
             </a>
             
-            <!-- Desktop Navigation -->
             <nav class="hidden lg:flex items-center space-x-8">
                 <ul class="flex space-x-8">
                     <li><a href="#" data-section="home" class="nav-link font-medium text-gray-600 hover:text-gray-900 active">Acasă</a></li>
@@ -369,7 +381,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed top-0 right-0 h-full w-full max-w-xs bg-white shadow-lg z-50 p-8 lg:hidden">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-bold text-blue-800">Meniu</h2>
@@ -391,7 +402,6 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
     <main class="flex-1 overflow-auto">
         <!-- Home Section -->
         <section id="home" class="content-section active">
@@ -417,7 +427,6 @@
             </div>
         </section>
 
-        <!-- Services Section -->
         <section id="services" class="content-section">
             <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4"></h2>
@@ -619,6 +628,11 @@
         </div>
     </div>
     
+    <!-- Dismiss Drop Zone -->
+    <div id="dismiss-drop-zone" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[51] flex items-center justify-center w-20 h-20 bg-gray-800 bg-opacity-70 rounded-full">
+        <i class="fas fa-times text-white text-3xl"></i>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -984,6 +998,127 @@
             }
             updateDriverStatus();
             setInterval(updateDriverStatus, 30000);
+
+            // --- DISMISSIBLE ASSISTANT LOGIC ---
+            const dismissDropZone = document.getElementById('dismiss-drop-zone');
+            assistantAvatar.draggable = true;
+
+            // --- Desktop (Mouse) Events ---
+            assistantAvatar.addEventListener('dragstart', () => {
+                // Use a timeout to allow the browser to capture the drag image
+                setTimeout(() => {
+                    assistantContainer.classList.add('dragging');
+                }, 0);
+                dismissDropZone.classList.add('visible');
+            });
+
+            assistantAvatar.addEventListener('dragend', () => {
+                assistantContainer.classList.remove('dragging');
+                dismissDropZone.classList.remove('visible');
+                dismissDropZone.classList.remove('hover'); // Ensure hover state is removed
+            });
+
+            dismissDropZone.addEventListener('dragover', (e) => {
+                e.preventDefault(); // Necessary to allow dropping
+            });
+
+            dismissDropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                dismissDropZone.classList.add('hover');
+            });
+
+            dismissDropZone.addEventListener('dragleave', () => {
+                dismissDropZone.classList.remove('hover');
+            });
+
+            dismissDropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                assistantContainer.style.display = 'none';
+                dismissDropZone.classList.remove('visible');
+            });
+
+            // --- Mobile (Touch) Events ---
+            let isTouching = false;
+            let initialTouchX, initialTouchY;
+            let containerRect;
+            let dropZoneRect;
+
+            const isOverDropZone = (x, y) => {
+                // Recalculate dropZoneRect just in case of layout shifts
+                const currentDropZoneRect = dismissDropZone.getBoundingClientRect();
+                return (
+                    x > currentDropZoneRect.left &&
+                    x < currentDropZoneRect.right &&
+                    y > currentDropZoneRect.top &&
+                    y < currentDropZoneRect.bottom
+                );
+            };
+
+            assistantAvatar.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isTouching = true;
+                    assistantContainer.style.transition = 'none'; // Disable transition for smooth dragging
+                    
+                    const touch = e.touches[0];
+                    initialTouchX = touch.clientX;
+                    initialTouchY = touch.clientY;
+                    
+                    containerRect = assistantContainer.getBoundingClientRect();
+                    assistantContainer.style.top = `${containerRect.top}px`;
+                    assistantContainer.style.left = `${containerRect.left}px`;
+                    assistantContainer.style.right = 'auto';
+                    assistantContainer.style.bottom = 'auto';
+                    assistantContainer.style.transform = '';
+                    
+                    assistantContainer.classList.add('dragging');
+                    dismissDropZone.classList.add('visible');
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isTouching) return;
+                
+                e.preventDefault();
+
+                const touch = e.touches[0];
+                const currentX = touch.clientX;
+                const currentY = touch.clientY;
+                const dx = currentX - initialTouchX;
+                const dy = currentY - initialTouchY;
+
+                assistantContainer.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                if (isOverDropZone(currentX, currentY)) {
+                    dismissDropZone.classList.add('hover');
+                } else {
+                    dismissDropZone.classList.remove('hover');
+                }
+            }, { passive: false });
+
+            document.addEventListener('touchend', (e) => {
+                if (!isTouching) return;
+                isTouching = false;
+
+                const touch = e.changedTouches[0];
+                const finalX = touch.clientX;
+                const finalY = touch.clientY;
+
+                if (isOverDropZone(finalX, finalY)) {
+                    assistantContainer.style.display = 'none';
+                } else {
+                    // Reset styles to snap back using CSS
+                    assistantContainer.style.top = '';
+                    assistantContainer.style.left = '';
+                    assistantContainer.style.right = '';
+                    assistantContainer.style.bottom = '';
+                    assistantContainer.style.transform = '';
+                    assistantContainer.style.transition = ''; // Re-enable transitions
+                }
+
+                assistantContainer.classList.remove('dragging');
+                dismissDropZone.classList.remove('visible');
+                dismissDropZone.classList.remove('hover');
+            });
         });
     </script>
 
