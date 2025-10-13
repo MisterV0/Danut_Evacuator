@@ -1,5 +1,5 @@
 {
-  "origin": "Cantemir",
+  "origin": "Caușeni",
   "destinations": [
     { "name": "Chișinău-Centru", "distance_km": 125.0 },
     { "name": "Chișinău-Botanica", "distance_km": 122.0 },
@@ -29,8 +29,8 @@
     { "name": "Anenii Noi", "distance_km": 35.7 },
   { "name": "Basarabeasca", "distance_km": 88.7 },
     { "name": "Briceni", "distance_km": 307.0 },
-    { "name": "Cahul", "distance_km": 46.0 },
-    { "name": "Călărași", "distance_km": 164.0 },
+  { "name": "Cahul", "distance_km": 168.0 },
+    { "name": "Călărași", "distance_km": 123.0 },
     { "name": "Căușeni", "distance_km": 113.0 },
     { "name": "Cimișlia", "distance_km": 41.0 },
     { "name": "Criuleni", "distance_km": 144.0 },
