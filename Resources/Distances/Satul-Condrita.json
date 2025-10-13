@@ -2,8 +2,8 @@
   "origin": "satul Condrița",
   "destinations": [
     { "name": "Chișinău-Centru", "distance_km": 35.1 },
-    { "name": "Chișinău-Botanica", "distance_km": 34.8 },
-    { "name": "Chișinău-Buiucani", "distance_km": 31.0 },
+    { "name": "Chișinău-Botanica", "distance_km": 35.7 },
+    { "name": "Chișinău-Buiucani", "distance_km": 26.0 },
     { "name": "Chișinău-Rîșcani", "distance_km": 39.4 },
     { "name": "Chișinău-Ciocana", "distance_km": 41.6 },
     { "name": "orașul Codru", "distance_km": 29.1 },
@@ -29,7 +29,7 @@
     { "name": "Basarabeasca", "distance_km": 97.3 },
   { "name": "Briceni", "distance_km": 236.0 },
   { "name": "Cahul", "distance_km": 179.0 },
-    { "name": "Cantemir", "distance_km": 111.6 },
+    { "name": "Cantemir", "distance_km": 133.0 },
     { "name": "Călărași", "distance_km": 43.0 },
     { "name": "Căușeni", "distance_km": 91.3 },
     { "name": "Cimișlia", "distance_km": 82.0 },
@@ -58,7 +58,7 @@
     { "name": "Telenești", "distance_km": 83.5 },
     { "name": "Ungheni", "distance_km": 91.7 },
     { "name": "municipiul Bălți", "distance_km": 140.2 },
-    { "name": "Comrat", "distance_km": 94.8 },
+    { "name": "Comrat", "distance_km": 106 },
     { "name": "municipiul Tiraspol", "distance_km": 94.2 },
     { "name": "municipiul Bender (Tighina)", "distance_km": 84.1 }
   ]

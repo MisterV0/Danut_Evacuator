@@ -30,10 +30,10 @@
   { "name": "Basarabeasca", "distance_km": 66.7 },
     { "name": "Briceni", "distance_km": 361.2 },
   { "name": "Cahul", "distance_km": 48.0 },
-    { "name": "Cantemir", "distance_km": 71.4 },
+    { "name": "Cantemir", "distance_km": 72.3 },
     { "name": "Călărași", "distance_km": 185.0 },
     { "name": "Căușeni", "distance_km": 104.5 },
-    { "name": "Cimișlia", "distance_km": 74.5 },
+    { "name": "Cimișlia", "distance_km": 83.9 },
     { "name": "Criuleni", "distance_km": 160.2 },
     { "name": "Dondușeni", "distance_km": 316.4 },
     { "name": "Drochia", "distance_km": 286.1 },
@@ -58,7 +58,7 @@
     { "name": "Telenești", "distance_km": 201.4 },
     { "name": "Ungheni", "distance_km": 187.4 },
     { "name": "municipiul Bălți", "distance_km": 253.1 },
-    { "name": "Comrat", "distance_km": 29.7 },
+    { "name": "Comrat", "distance_km": 53.2 },
     { "name": "municipiul Tiraspol", "distance_km": 156.0 },
     { "name": "municipiul Bender (Tighina)", "distance_km": 145.9 }
   ]

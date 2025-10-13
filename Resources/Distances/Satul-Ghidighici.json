@@ -25,7 +25,7 @@
     { "name": "comuna Tohatin", "distance_km": 24.3 },
     { "name": "comuna Trușeni", "distance_km": 6.1 },
     { "name": "Aeroportul Internațional Chișinău", "distance_km": 26.6 },
-    { "name": "Anenii Noi", "distance_km": 53.6 },
+    { "name": "Anenii Noi", "distance_km": 50 },
     { "name": "Basarabeasca", "distance_km": 101.0 },
   { "name": "Briceni", "distance_km": 238.0 },
     { "name": "Cahul", "distance_km": 184.0 },
@@ -58,7 +58,7 @@
     { "name": "Telenești", "distance_km": 85.8 },
     { "name": "Ungheni", "distance_km": 103.0 },
     { "name": "municipiul Bălți", "distance_km": 139.0 },
-    { "name": "Comrat", "distance_km": 96.8 },
+    { "name": "Comrat", "distance_km": 111 },
     { "name": "municipiul Tiraspol", "distance_km": 83.4 },
     { "name": "municipiul Bender (Tighina)", "distance_km": 72.5 }
   ]

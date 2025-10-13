@@ -3,7 +3,7 @@
   "destinations": [
     { "name": "Chișinău-Centru", "distance_km": 11.5 },
     { "name": "Chișinău-Botanica", "distance_km": 13.0 },
-    { "name": "Chișinău-Buiucani", "distance_km": 16.2 },
+    { "name": "Chișinău-Buiucani", "distance_km": 13.4 },
     { "name": "Chișinău-Rîșcani", "distance_km": 17.3 },
     { "name": "Chișinău-Ciocana", "distance_km": 16.2 },
     { "name": "orașul Codru", "distance_km": 8.1 },
@@ -33,7 +33,7 @@
     { "name": "Cantemir", "distance_km": 119.5 },
     { "name": "Călărași", "distance_km": 58.6 },
     { "name": "Căușeni", "distance_km": 78.4 },
-    { "name": "Cimișlia", "distance_km": 74.8 },
+    { "name": "Cimișlia", "distance_km": 60.4 },
     { "name": "Criuleni", "distance_km": 57.9 },
     { "name": "Dondușeni", "distance_km": 224.5 },
     { "name": "Drochia", "distance_km": 160.1 },

@@ -2,10 +2,9 @@ import json
 import os
 import unicodedata
 
-# --- CONFIGURATION ---
-# Change this variable to the name of the file you want to check against all others.
-PRIMARY_FILE_TO_CHECK = "Calarasi.json"
-# -------------------
+PRIMARY_FILE_TO_CHECK = "Chisinau-Botanica.json"
+DISCREPANCY_THRESHOLD_KM = 3.9
+
 
 def normalize_name_to_filename(location_name):
     """
@@ -18,18 +17,18 @@ def normalize_name_to_filename(location_name):
 
     # Replace spaces and parentheses with hyphens, remove trailing hyphens
     sanitized = normalized.replace(" ", "-").replace("(", "").replace(")", "")
-    
+
     # Handle case variations by checking for different casings
     potential_filenames = [
         f"{sanitized}.json",
         f"{sanitized.lower()}.json",
         f"{location_name.replace(' ', '-')}.json" # Try with original diacritics
     ]
-    
+
     for filename in potential_filenames:
         if os.path.exists(filename):
             return filename
-            
+
     # If no file was found after trying variations, return the most likely name
     return f"{location_name.replace(' ', '-')}.json"
 
@@ -37,12 +36,13 @@ def normalize_name_to_filename(location_name):
 def check_distances():
     """
     Main function to load the primary file and check distance consistency.
-    It now only reports on mismatches and errors, sorting mismatches by the
-    size of the discrepancy.
+    It now reports all mismatches and errors, and a specific list of large discrepancies.
     """
     checked_count = 0
     mismatches = []
     errors = []
+    # New list to store destinations with discrepancies greater than the threshold
+    large_discrepancy_destinations = []
 
     # 1. Load the main file to be checked
     try:
@@ -89,13 +89,19 @@ def check_distances():
 
             discrepancy = abs(distance_forward - distance_backward)
             if discrepancy > 0.01:
-                mismatches.append({
+                # Store all mismatches
+                mismatch_data = {
                     "origin": main_origin,
                     "destination": destination_name,
                     "forward_km": distance_forward,
                     "backward_km": distance_backward,
                     "discrepancy": discrepancy
-                })
+                }
+                mismatches.append(mismatch_data)
+
+                # Check against the new threshold
+                if discrepancy > DISCREPANCY_THRESHOLD_KM:
+                    large_discrepancy_destinations.append(destination_name)
             else:
                 checked_count += 1
 
@@ -107,7 +113,7 @@ def check_distances():
     # --- REPORTING ---
     print("\n--- Check Complete ---")
 
-    # 3. Report mismatches, sorted from largest to smallest discrepancy
+    # 3. Report all mismatches, sorted from largest to smallest discrepancy (as before)
     if mismatches:
         print(f"\n--- ❌ Found {len(mismatches)} Mismatches (sorted by discrepancy) ---")
         # Sort the list of mismatches by the 'discrepancy' value in descending order
@@ -123,7 +129,19 @@ def check_distances():
         for error_msg in errors:
             print(f"  {error_msg}")
 
-    # 5. Print the final summary
+    # 5. Print the list of places with large discrepancies (NEW SECTION)
+    if large_discrepancy_destinations:
+        print(f"\n--- 🚨 Large Discrepancies (> {DISCREPANCY_THRESHOLD_KM:.1f} km) ---")
+        # Sort the list alphabetically for clean presentation
+        large_discrepancy_destinations.sort()
+        # Format the list as required: x ; y ; z ; etc.
+        list_output = " ; ".join(large_discrepancy_destinations)
+        print(list_output)
+    elif mismatches:
+        print(f"\n--- 🚨 Large Discrepancies (> {DISCREPANCY_THRESHOLD_KM:.1f} km) ---")
+        print("None of the mismatches exceeded the specified threshold.")
+
+    # 6. Print the final summary
     print("\n--- Summary ---")
     print(f"✅ Consistent distances: {checked_count}")
     print(f"❌ Mismatches found:     {len(mismatches)}")

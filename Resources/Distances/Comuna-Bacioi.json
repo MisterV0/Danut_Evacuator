@@ -24,7 +24,7 @@
     { "name": "orașul Stăuceni", "distance_km": 26.4 },
     { "name": "comuna Tohatin", "distance_km": 23.5 },
     { "name": "comuna Trușeni", "distance_km": 27.9 },
-    { "name": "Aeroportul International Chisinau", "distance_km": 5.9 },
+    { "name": "Aeroportul International Chisinau", "distance_km": 7.0 },
     { "name": "Anenii Noi", "distance_km": 30.1 },
     { "name": "Basarabeasca", "distance_km": 80.6 },
   { "name": "Briceni", "distance_km": 252.0 },
@@ -58,7 +58,7 @@
     { "name": "Telenești", "distance_km": 106.0 },
     { "name": "Ungheni", "distance_km": 111.0 },
     { "name": "municipiul Bălți", "distance_km": 150.0 },
-    { "name": "Comrat", "distance_km": 82.4 },
+    { "name": "Comrat", "distance_km": 86.1 },
     { "name": "municipiul Tiraspol", "distance_km": 66.3 },
     { "name": "municipiul Bender (Tighina)", "distance_km": 52.1 }
   ]
