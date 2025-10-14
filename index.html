@@ -679,8 +679,15 @@
                             <label for="is-automatic" class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-blue-800 has-[:checked]:ring-2 has-[:checked]:ring-blue-800 transition-all hover:border-gray-400"><input type="checkbox" id="is-automatic" name="is-automatic" class="h-5 w-5 rounded border-gray-300 text-blue-800 focus:ring-blue-700"><div class="ml-4"><span class="text-sm font-medium text-gray-900">Vehicul blocat</span></div></label>
                         </div>
                         <button type="submit" id="calculateBtn" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 transition-all duration-200 button-hover-effect disabled:opacity-50 disabled:cursor-not-allowed" disabled>Calculează Tariful</button>
-                        <p class="text-xs text-gray-500 mt-4 max-w-lg mx-auto">*Calculat folosind cel mai scurt traseu între cele 2 destinații, prețul final depinde de distanța exactă dintre punctul de pornire și cel de oprire și poate fi ușor diferit (+-10%). Va fi confirmat telefonic.</p>
                     </form>
+                    <div class="mt-8">
+                        <div class="bg-gray-50 rounded-xl p-4 border-l-4 border-blue-400">
+                            <p class="text-xs text-gray-600 text-center leading-relaxed">
+                                <i class="fas fa-info-circle text-blue-400 mr-1"></i>
+                                Calculat folosind cel mai scurt traseu, prețul final depinde de distanța exactă și poate fi ușor diferit (+-10%). Acesta va fi confirmat telefonic.
+                            </p>
+                        </div>
+                    </div>
                     <div id="loaderContainer" class="hidden w-full my-8">
                         <div id="counter">0%</div>
                         <img id="loaderTruckImage" src="icon.png" alt="Se calculează..." />

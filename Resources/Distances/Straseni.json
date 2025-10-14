@@ -41,7 +41,7 @@
     { "name": "Edineț", "distance_km": 196.5 },
     { "name": "Fălești", "distance_km": 100.9 },
     { "name": "Florești", "distance_km": 121.2 },
-    { "name": "Glodeni", "distance_km": 124.5 },
+    { "name": "Glodeni", "distance_km": 145.0 },
     { "name": "Hîncești", "distance_km": 58.5 },
     { "name": "Ialoveni", "distance_km": 32.6 },
     { "name": "Leova", "distance_km": 98.2 },
@@ -49,7 +49,7 @@
     { "name": "Ocnița", "distance_km": 210.1 },
     { "name": "Orhei", "distance_km": 38.3 },
     { "name": "Rezina", "distance_km": 92.0 },
-    { "name": "Rîșcani", "distance_km": 135.6 },
+    { "name": "Rîșcani", "distance_km": 152.0 },
     { "name": "Sîngerei", "distance_km": 116.3 },
     { "name": "Soroca", "distance_km": 142.4 },
     { "name": "Șoldănești", "distance_km": 110.9 },
@@ -60,6 +60,6 @@
     { "name": "municipiul Bălți", "distance_km": 109.8 },
     { "name": "Comrat", "distance_km": 122 },
     { "name": "municipiul Tiraspol", "distance_km": 99.8 },
-    { "name": "municipiul Bender (Tighina)", "distance_km": 89.7 }
+  { "name": "municipiul Bender (Tighina)", "distance_km": 87.5 }
   ]
 }
