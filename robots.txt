@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://evacuator2424.md/sitemap.xml
+
+# Disallow indexing of resources folder if desired (optional)
+# Allow: /Resources/Photo/
+# Disallow: /Resources/Distances/

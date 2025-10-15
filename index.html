@@ -21,6 +21,14 @@
             overflow: hidden;
         }
 
+        /* Anchor link styles for smooth scrolling */
+        .anchor {
+            display: block;
+            position: relative;
+            top: -80px; /* Offset for fixed header */
+            visibility: hidden;
+        }
+
         .nav-link { transition: all 0.3s ease; position: relative; }
         .nav-link.active::after {
             content: ''; position: absolute; left: 50%; bottom: -8px; width: 80%; height: 4px;
@@ -441,6 +449,7 @@
     <main class="flex-1 overflow-auto">
         <!-- Home Section -->
         <section id="home" class="content-section active">
+            <a id="acasa" class="anchor"></a>
             <div class="container mx-auto px-4 lg:px-12 pt-8">
                 <div class="hero-carousel-container">
                     <div class="carousel-slide" data-index="0"><img src="Resources/Photo/HeroImages/HeroImage_1.jpg" alt="Hero Image 1" /></div>
@@ -464,6 +473,7 @@
         </section>
 
         <section id="services" class="content-section">
+            <a id="servicii" class="anchor"></a>
             <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4"></h2>
                 <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Oferim o gamă largă de servicii profesionale de tractare și transport. Misiunea noastră este să oferim soluții rapide, fiabile și transparente pentru toate nevoile vehiculului dumneavoastră.</p>
@@ -517,6 +527,7 @@
 
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
+            <a id="galerie" class="anchor"></a>
             <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-6">Cazuri reale ale clienților</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
@@ -723,6 +734,7 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <a id="contact" class="anchor"></a>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Despre Evacuator2424</h4>
@@ -812,19 +824,58 @@
             setTimeout(() => { comicBubble.classList.add('show'); playNotificationSound(); setTimeout(() => { comicBubble.classList.remove('show'); }, 5000); }, 6000);
 
             // --- NAVIGATION ---
+            // Map Romanian hash names to English section IDs
+            const hashToSection = {
+                'acasa': 'home',
+                'servicii': 'services',
+                'galerie': 'gallery',
+                'flota': 'flota',
+                'recenzii': 'recenzii',
+                'calculator': 'calculator',
+                'contact': 'home' // Footer contact scrolls to top or stays on current section
+            };
+
+            const showSection = (sectionId) => {
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                sections.forEach(sec => sec.classList.remove('active'));
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    const desktopLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+                    if(desktopLink) desktopLink.classList.add('active');
+                    window.scrollTo(0, 0);
+                }
+            };
+
             const handleLinkClick = (e) => {
                 e.preventDefault();
                 const t = e.currentTarget.getAttribute('data-section');
-                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-                sections.forEach(sec => sec.classList.remove('active'));
-                document.getElementById(t).classList.add('active');
-                const desktopLink = document.querySelector(`.nav-link[data-section="${t}"]`);
-                if(desktopLink) desktopLink.classList.add('active');
-                window.scrollTo(0, 0);
+                showSection(t);
                 closeMenu();
             };
             navLinks.forEach(link => link.addEventListener('click', handleLinkClick));
             mobileNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
+
+            // Handle hash changes (for direct URL navigation)
+            const handleHashChange = () => {
+                const hash = window.location.hash.substring(1); // Remove '#'
+                if (hash) {
+                    const sectionId = hashToSection[hash] || hash;
+                    if (document.getElementById(sectionId)) {
+                        showSection(sectionId);
+                    }
+                }
+            };
+
+            // Listen for hash changes
+            window.addEventListener('hashchange', handleHashChange);
+            
+            // Handle initial hash on page load
+            window.addEventListener('load', () => {
+                if (window.location.hash) {
+                    handleHashChange();
+                }
+            });
 
             // --- HERO CAROUSEL ---
             const slides = document.querySelectorAll('.carousel-slide');
