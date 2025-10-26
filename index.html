@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evacuator non-stop în Chișinău și suburbii.</title>
+    <title>Evacuator non stop in Chisinau si suburbii</title>
     <link rel="icon" href="Resources/Photo/Icons/WebIcon.png" type="image/png">
+    <!-- Tailwind CSS CDN - Pentru producție, instalați Tailwind ca PostCSS plugin: https://tailwindcss.com/docs/installation -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -19,6 +20,14 @@
         
         body.mobile-menu-open {
             overflow: hidden;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         /* Anchor link styles for smooth scrolling */
@@ -41,75 +50,220 @@
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Hero Carousel Styles */
-        .hero-carousel-container { position: relative; width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
-        .carousel-slide { position: absolute; width: 90%; height: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2); transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease, z-index 0s 0.4s; cursor: pointer; }
+        /* Hero Carousel Styles - Modern SaaS Design */
+        .hero-carousel-container { 
+            position: relative; 
+            width: 100%; 
+            height: 40vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            perspective: 1200px;
+            margin-bottom: 1rem;
+        }
+        .carousel-slide { 
+            position: absolute; 
+            width: 95%; 
+            height: 100%; 
+            border-radius: 1.25rem; 
+            overflow: hidden; 
+            box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.3); 
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease, z-index 0s 0.4s; 
+            cursor: pointer; 
+        }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
         .carousel-slide.active { transform: translateX(0) scale(1); opacity: 1; z-index: 10; }
         .carousel-slide.prev { transform: translateX(-40%) scale(0.8); opacity: 0.5; z-index: 5; }
         .carousel-slide.next { transform: translateX(40%) scale(0.8); opacity: 0.5; z-index: 5; }
         .carousel-slide.hidden-prev { transform: translateX(-80%) scale(0.6); opacity: 0; z-index: 1; }
         .carousel-slide.hidden-next { transform: translateX(80%) scale(0.6); opacity: 0; z-index: 1; }
-        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background-color: rgba(255, 255, 255, 0.7); border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .carousel-arrow:hover { background-color: rgba(255, 255, 255, 1); transform: translateY(-50%) scale(1.1); }
-        .arrow-left { left: 2%; }
-        .arrow-right { right: 2%; }
+        .carousel-arrow { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            z-index: 20; 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+            backdrop-filter: blur(10px);
+            border-radius: 50%; 
+            width: 36px; 
+            height: 36px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .carousel-arrow:hover { 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.95));
+            transform: translateY(-50%) scale(1.1); 
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        .carousel-arrow svg { width: 18px; height: 18px; }
+        .arrow-left { left: 8px; }
+        .arrow-right { right: 8px; }
         
+        @media (min-width: 640px) {
+            .hero-carousel-container { height: 45vh; margin-bottom: 1.5rem; }
+            .carousel-slide { width: 90%; border-radius: 1.5rem; }
+            .carousel-arrow { width: 40px; height: 40px; }
+            .carousel-arrow svg { width: 20px; height: 20px; }
+            .arrow-left { left: 12px; }
+            .arrow-right { right: 12px; }
+        }
         @media (min-width: 768px) {
-            .hero-carousel-container { height: 60vh; }
-            .carousel-slide { width: 70%; }
+            .hero-carousel-container { height: 55vh; }
+            .carousel-slide { width: 75%; border-radius: 1.75rem; }
+            .carousel-arrow { width: 50px; height: 50px; }
+            .carousel-arrow svg { width: 24px; height: 24px; }
             .arrow-left { left: 5%; }
             .arrow-right { right: 5%; }
         }
-
-        .attribute-card {
-            background-color: #ffffff; border-radius: 1rem; padding: 2rem 1.5rem;
-            text-align: center; border: 2px solid transparent; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            opacity: 0; animation: fadeInUp 0.5s ease-out forwards;
+        @media (min-width: 1024px) {
+            .hero-carousel-container { height: 60vh; }
+            .carousel-slide { width: 70%; }
         }
-        .attribute-card:hover { transform: translateY(-10px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: #34D399; }
-        .attribute-card .icon { font-size: 3rem; margin: 0 auto 1.25rem auto; color: #10B981; }
-        .attribute-card h4 { font-size: 1.125rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem; }
-        .attribute-card p { font-size: 0.9rem; line-height: 1.5; color: #4b5563; }
-        .attribute-card:nth-child(1) { animation-delay: 0.1s; }
-        .attribute-card:nth-child(2) { animation-delay: 0.2s; }
-        .attribute-card:nth-child(3) { animation-delay: 0.3s; }
-        .attribute-card:nth-child(4) { animation-delay: 0.4s; }
-        .attribute-card:nth-child(5) { animation-delay: 0.5s; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .service-card {
-            background-color: #ffffff;
-            border-radius: 1rem;
-            padding: 2.5rem 2rem;
+
+        /* Attribute Cards - Modern SaaS Grid */
+        .attribute-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 1.25rem;
+            padding: 1.5rem 1rem;
+            text-align: center;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .attribute-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #10B981, #34D399);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .attribute-card:hover::before {
+            transform: scaleX(1);
+        }
+        .attribute-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: 0 12px 24px -8px rgba(16, 185, 129, 0.2);
+            border-color: #34D399; 
+        }
+        .attribute-card .icon { 
+            font-size: 2.25rem; 
+            margin: 0 auto 0.875rem auto; 
+            color: #10B981;
+            transition: transform 0.3s ease;
+        }
+        .attribute-card:hover .icon {
+            transform: scale(1.1);
+        }
+        .attribute-card h4 { 
+            font-size: 0.9375rem; 
+            font-weight: 700; 
+            color: #111827; 
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        .attribute-card p { 
+            font-size: 0.8125rem; 
+            line-height: 1.5; 
+            color: #6b7280;
+        }
+        .attribute-card:nth-child(1) { animation-delay: 0.05s; }
+        .attribute-card:nth-child(2) { animation-delay: 0.1s; }
+        .attribute-card:nth-child(3) { animation-delay: 0.15s; }
+        .attribute-card:nth-child(4) { animation-delay: 0.2s; }
+        .attribute-card:nth-child(5) { animation-delay: 0.25s; }
+        
+        @media (min-width: 640px) {
+            .attribute-card { padding: 1.75rem 1.25rem; }
+            .attribute-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+            .attribute-card h4 { font-size: 1rem; }
+            .attribute-card p { font-size: 0.875rem; }
+        }
+        @media (min-width: 768px) {
+            .attribute-card { padding: 2rem 1.5rem; }
+            .attribute-card .icon { font-size: 3rem; margin-bottom: 1.25rem; }
+            .attribute-card h4 { font-size: 1.125rem; }
+            .attribute-card p { font-size: 0.9rem; }
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Service Cards - Clean Modern Design */
+        .service-card {
+            background: #ffffff;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1px solid #f3f4f6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: left;
-            height: 100%; /* Ensure cards have same height */
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover::after {
+            transform: scaleX(1);
         }
         .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.1);
-            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(59, 130, 246, 0.15);
+            border-color: #dbeafe;
         }
         .service-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #1e40af;
+            font-size: 1.875rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
             display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover .icon {
+            transform: scale(1.1);
         }
         .service-card h4 {
-            font-size: 1.25rem;
-            font-weight: 800;
+            font-size: 1.0625rem;
+            font-weight: 700;
             color: #111827;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
         }
         .service-card p {
-            font-size: 0.95rem;
+            font-size: 0.8125rem;
             line-height: 1.6;
-            color: #4b5563;
+            color: #6b7280;
+        }
+        @media (min-width: 640px) {
+            .service-card { padding: 1.75rem; }
+            .service-card .icon { font-size: 2rem; }
+            .service-card h4 { font-size: 1.125rem; margin-bottom: 0.875rem; }
+            .service-card p { font-size: 0.875rem; }
+        }
+        @media (min-width: 768px) {
+            .service-card { padding: 2.5rem 2rem; }
+            .service-card .icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+            .service-card h4 { font-size: 1.25rem; margin-bottom: 1rem; }
+            .service-card p { font-size: 0.95rem; }
         }
 
         .assistant-container {
@@ -169,6 +323,52 @@
         @keyframes shake-phone {
             0%, 100% { transform: rotate(0); } 10%, 30%, 50%, 70% { transform: rotate(-10deg); }
             20%, 40%, 60%, 80% { transform: rotate(10deg); } 90% { transform: rotate(0); }
+        }
+
+        /* Hero CTA Buttons - Professional & Refined */
+        .hero-cta-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+        }
+        .hero-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        .hero-cta-button:hover::before {
+            left: 100%;
+        }
+        .hero-cta-button:active {
+            transform: scale(0.98);
+        }
+        @media (max-width: 640px) {
+            .hero-cta-button {
+                font-size: 0.875rem;
+                padding: 0.875rem 1.5rem;
+            }
+        }
+
+        /* Modern Badges & Pills */
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Gallery Images - Modern Hover */
+        .gallery-image {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0.75rem;
+        }
+        .gallery-image:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.2);
         }
         
         /* Calculator Styles */
@@ -460,19 +660,86 @@
         <!-- Home Section -->
         <section id="home" class="content-section active">
             <a id="acasa" class="anchor"></a>
-            <div class="container mx-auto px-4 lg:px-12 pt-8">
+            <div class="container mx-auto px-3 sm:px-4 lg:px-12 pt-6 sm:pt-8">
                 <div class="hero-carousel-container">
-                    <div class="carousel-slide" data-index="0"><img src="Resources/Photo/HeroImages/HeroImage_1.jpg" alt="Hero Image 1" /></div>
-                    <div class="carousel-slide" data-index="1"><img src="Resources/Photo/HeroImages/HeroImage_2.jpg" alt="Hero Image 2" /></div>
-                    <div class="carousel-slide" data-index="2"><img src="Resources/Photo/HeroImages/HeroImage_3.jpg" alt="Hero Image 3" /></div>
-                    <div class="carousel-slide" data-index="3"><img src="Resources/Photo/HeroImages/HeroImage_4.jpg" alt="Hero Image 4" /></div>
+                    <div class="carousel-slide" data-index="0">
+                        <img src="Resources/Photo/HeroImages/HeroImage_1.jpg" 
+                             srcset="Resources/Photo/HeroImages/HeroImage_1.jpg 800w"
+                             sizes="(max-width: 768px) 90vw, 70vw"
+                             alt="Serviciu evacuator profesional Chișinău - tractare auto rapidă și sigură" />
+                    </div>
+                    <div class="carousel-slide" data-index="1">
+                        <img src="Resources/Photo/HeroImages/HeroImage_2.jpg" 
+                             srcset="Resources/Photo/HeroImages/HeroImage_2.jpg 800w"
+                             sizes="(max-width: 768px) 90vw, 70vw"
+                             alt="Evacuator non-stop Moldova - transport auto de urgență" />
+                    </div>
+                    <div class="carousel-slide" data-index="2">
+                        <img src="Resources/Photo/HeroImages/HeroImage_3.jpg" 
+                             srcset="Resources/Photo/HeroImages/HeroImage_3.jpg 800w"
+                             sizes="(max-width: 768px) 90vw, 70vw"
+                             alt="Tractare auto profesională - evacuator rapid în Chișinău și suburbii" />
+                    </div>
+                    <div class="carousel-slide" data-index="3">
+                        <img src="Resources/Photo/HeroImages/HeroImage_4.jpg" 
+                             srcset="Resources/Photo/HeroImages/HeroImage_4.jpg 800w"
+                             sizes="(max-width: 768px) 90vw, 70vw"
+                             alt="Servicii evacuator internaționale - transport auto în toată Moldova și peste hotare" />
+                    </div>
                     <div class="carousel-arrow arrow-left"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg></div>
                     <div class="carousel-arrow arrow-right"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
                 </div>
-                <div class="mt-12 md:mt-16 mb-10">
-                    <h3 class="text-2xl font-extrabold text-gray-900 text-center mb-10">De ce noi?</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                        <div class="attribute-card"><i class="fas fa-headset icon"></i><h4>Asistență 24/24</h4><p>Zi sau noapte, echipa este mereu gata de intervenție.</p></div>
+                
+                <!-- Hero CTA Section - Modern SaaS Design -->
+                <div class="text-center mt-6 mb-8 px-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-orange-50 to-blue-50 rounded-full mb-4 border border-orange-100/50">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        <span class="text-xs font-semibold text-gray-700 tracking-wide">DISPONIBIL 24/7</span>
+                    </div>
+                    
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 leading-tight tracking-tight">
+                        Platformă disponibilă
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-blue-600 mt-1">
+                            în toată Moldova
+                        </span>
+                    </h2>
+                    
+                    <p class="text-sm sm:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">
+                        Tractări profesionale, intervenție rapidă, tarife transparente
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center items-stretch max-w-md mx-auto">
+                        <a href="tel:068223614" class="hero-cta-button flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3.5 px-6 rounded-full text-sm transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 border border-orange-400/30 backdrop-blur-sm">
+                            <i class="fas fa-phone-alt text-base"></i>
+                            <span class="whitespace-nowrap">Sună: 068223614</span>
+                        </a>
+                        <a href="#" data-section="calculator" class="hero-cta-button flex-1 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3.5 px-6 rounded-full text-sm transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 border-2 border-gray-200 backdrop-blur-sm nav-link">
+                            <i class="fas fa-calculator text-base"></i>
+                            <span>Calculator</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-5 flex items-center justify-center gap-4 text-xs text-gray-500">
+                        <div class="flex items-center gap-1.5">
+                            <span>Răspuns în 5 min</span>
+                        </div>
+                        <div class="w-1 h-1 rounded-full bg-gray-300"></div>
+                        <div class="flex items-center gap-1.5">
+                            <span>100% Satisfacție</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 md:mt-14 mb-8 md:mb-10">
+                    <div class="text-center mb-8 md:mb-10">
+                        <span class="inline-block px-4 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-full mb-3 border border-green-100">
+                            AVANTAJELE NOASTRE
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+                        <div class="attribute-card"><i class="fas fa-headset icon"></i><h4>Asistență 24/24</h4><p>Disponibili non-stop pentru orice urgență auto.</p></div>
                         <div class="attribute-card"><i class="fas fa-globe-americas icon"></i><h4>Acoperire Internațională</h4><p>Serviciile noastre se extind și peste hotare.</p></div>
                         <div class="attribute-card"><i class="fas fa-file-invoice-dollar icon"></i><h4>Transparență</h4><p>Fără taxe ascunse. Oferim prețuri clare, de la bun început.</p></div>
                         <div class="attribute-card"><i class="fas fa-truck-pickup icon"></i><h4>Echipament Profesional</h4><p>Folosim autospeciale performante și sigure.</p></div>
@@ -484,14 +751,23 @@
 
         <section id="services" class="content-section">
             <a id="servicii" class="anchor"></a>
-            <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-4"></h2>
-                <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Oferim o gamă largă de servicii profesionale de tractare și transport. Misiunea noastră este să oferim soluții rapide, fiabile și transparente pentru toate nevoile vehiculului dumneavoastră.</p>
+            <div class="container mx-auto px-4 lg:px-10 py-8 lg:py-10">
+                <div class="text-center mb-8 md:mb-10">
+                    <span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full mb-3 border border-blue-100">
+                        SERVICII COMPLETE
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+                        Ce oferim
+                    </h2>
+                    <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Soluții profesionale de tractare și transport pentru toate nevoile tale
+                    </p>
+                </div>
                 
                 <div id="service-carousel-container" class="relative w-full md:overflow-hidden">
                     <div id="service-carousel-track" class="md:flex md:-mx-4">
                         <!-- Service Card 1 -->
-                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4 mb-3 md:mb-0">
                             <div class="service-card">
                                 <i class="fas fa-truck-pickup icon"></i>
                                 <h4>Tractări complete</h4>
@@ -499,7 +775,7 @@
                             </div>
                         </div>
                         <!-- Service Card 2 -->
-                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4 mb-3 md:mb-0">
                             <div class="service-card">
                                 <i class="fas fa-tags icon"></i>
                                 <h4>Prețuri transparente</h4>
@@ -507,7 +783,7 @@
                             </div>
                         </div>
                         <!-- Service Card 3 -->
-                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4 mb-3 md:mb-0">
                             <div class="service-card">
                                 <i class="fas fa-globe-europe icon"></i>
                                 <h4>Național & Internațional</h4>
@@ -515,7 +791,7 @@
                             </div>
                         </div>
                         <!-- Service Card 4 -->
-                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4 mb-3 md:mb-0">
                            <div class="service-card">
                                 <i class="fas fa-shipping-fast icon"></i>
                                 <h4>Răspuns Imediat 24/7</h4>
@@ -523,7 +799,7 @@
                             </div>
                         </div>
                          <!-- Service Card 5 (New) -->
-                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4">
+                        <div class="w-full md:w-1/3 md:flex-shrink-0 md:p-4 mb-3 md:mb-0">
                            <div class="service-card">
                                 <i class="fas fa-handshake icon"></i>
                                 <h4>Parteneriate B2B & Flote Auto</h4>
@@ -538,16 +814,51 @@
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
             <a id="galerie" class="anchor"></a>
-            <div class="container mx-auto px-4 lg:px-10 py-6 lg:py-8">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-6">Cazuri reale ale clienților</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-                    <img src="Resources/Photo/Gallery/Gal_1.jpg" alt="Imagine Galerie 1" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_2.jpg" alt="Imagine Galerie 2" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_3.jpg" alt="Imagine Galerie 3" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_4.jpg" alt="Imagine Galerie 4" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_5.jpg" alt="Imagine Galerie 5" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_6.jpg" alt="Imagine Galerie 6" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
-                    <img src="Resources/Photo/Gallery/Gal_7.jpg" alt="Imagine Galerie 7" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+            <div class="container mx-auto px-4 lg:px-10 py-8 lg:py-10">
+                <div class="text-center mb-6 md:mb-8">
+                    <span class="inline-block px-4 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full mb-3 border border-purple-100">
+                        GALERIE PROIECTE
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                        Cazuri reale ale clienților
+                    </h2>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 md:gap-4">
+                    <img src="Resources/Photo/Gallery/Gal_1.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_1.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Evacuator Chișinău - tractare auto profesională, caz real client" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_2.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_2.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Servicii evacuator Moldova - transport vehicul avariat" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_3.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_3.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Evacuator non-stop - intervenție rapidă în caz de urgență" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_4.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_4.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Tractare auto Chișinău - evacuator profesional pentru toate tipurile de vehicule" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_5.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_5.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Servicii evacuator 24/7 Moldova - transport sigur și rapid" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_6.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_6.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Evacuator Chișinău - recuperare vehicule accidentate" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
+                    <img src="Resources/Photo/Gallery/Gal_7.jpg" 
+                         srcset="Resources/Photo/Gallery/Gal_7.jpg 400w"
+                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                         alt="Transport auto Moldova - evacuator rapid și sigur" 
+                         class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />
                     <!--<img src="Resources/Photo/Gallery/Gal_8.jpg" alt="Imagine Galerie 8" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />-->
                     <!--<img src="Resources/Photo/Gallery/Gal_9.jpg" alt="Imagine Galerie 9" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />-->
                     <!--<img src="Resources/Photo/Gallery/Gal_10.jpg" alt="Imagine Galerie 10" class="gallery-image w-full aspect-square object-cover rounded-lg shadow-md cursor-pointer" />-->
@@ -561,7 +872,11 @@
                 <div class="flex flex-col md:flex-row justify-center items-center gap-8">
                     <!-- Driver Card -->
                     <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center max-w-sm">
-                        <img src="Resources/Photo/Icons/Icon_Driver.jpg" alt="Șofer 1" class="w-32 h-32 mb-4 object-cover" />
+                        <img src="Resources/Photo/Icons/Icon_Driver.jpg" 
+                             srcset="Resources/Photo/Icons/Icon_Driver.jpg 200w"
+                             sizes="128px"
+                             alt="Daniel - Șofer profesionist evacuator Chișinău, fondator evacuator2424" 
+                             class="w-32 h-32 mb-4 object-cover" />
                         <div class="flex items-center justify-center gap-x-3 mb-2">
                              <h3 class="text-xl md:text-2xl font-bold text-gray-900">Daniel</h3>
                              <div id="driver-1-status" class="status-display">
@@ -574,7 +889,11 @@
                     </div>
                     <!-- Vehicle Card -->
                     <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center text-center max-w-sm">
-                        <img src="Resources/Photo/Icons/Icon_Car.jpg" alt="Mercedes Sprinter" class="w-full h-48 rounded-lg object-cover mb-4" />
+                        <img src="Resources/Photo/Icons/Icon_Car.jpg" 
+                             srcset="Resources/Photo/Icons/Icon_Car.jpg 400w"
+                             sizes="(max-width: 640px) 100vw, 384px"
+                             alt="Mercedes Sprinter 2007 - Autospecială profesională pentru evacuări și tractări auto în Chișinău" 
+                             class="w-full h-48 rounded-lg object-cover mb-4" />
                         <h3 class="text-xl md:text-2xl font-bold text-gray-900">Mercedes Sprinter</h3>
                         <p class="text-gray-700 mt-1">Anul producerii: 2007</p>
                     </div>
@@ -595,7 +914,11 @@
                     <!-- Review Card 1 -->
                     <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
                         <div class="mb-6">
-                            <img src="Resources/Photo/Reviews/Review_1_ValerioR.png" alt="Avatar Valerio R" class="w-20 h-20 rounded-full mx-auto object-cover border-4 border-blue-100 shadow-sm">
+                            <img src="Resources/Photo/Reviews/Review_1_ValerioR.png" 
+                                 srcset="Resources/Photo/Reviews/Review_1_ValerioR.png 100w"
+                                 sizes="80px"
+                                 alt="Recenzie client Valerio R - servicii evacuator Chișinău 5 stele" 
+                                 class="w-20 h-20 rounded-full mx-auto object-cover border-4 border-blue-100 shadow-sm">
                         </div>
                         <h4 class="text-lg font-bold text-center text-gray-900 mb-1">Valerio R</h4>
                         <p class="text-xs text-gray-500 text-center mb-4 uppercase tracking-wide">Persoană Fizică</p>
@@ -612,7 +935,11 @@
                     <!-- Review Card 2 -->
                     <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
                         <div class="mb-6">
-                            <img src="Resources/Photo/Reviews/Review_2_DarPentruMoldova.png" alt="DAR PENTRU MOLDOVA" class="w-20 h-20 rounded-full mx-auto object-cover border-4 border-blue-100 shadow-sm">
+                            <img src="Resources/Photo/Reviews/Review_2_DarPentruMoldova.png" 
+                                 srcset="Resources/Photo/Reviews/Review_2_DarPentruMoldova.png 100w"
+                                 sizes="80px"
+                                 alt="Recenzie companie DAR PENTRU MOLDOVA - partener B2B servicii evacuator" 
+                                 class="w-20 h-20 rounded-full mx-auto object-cover border-4 border-blue-100 shadow-sm">
                         </div>
                         <h4 class="text-lg font-bold text-center text-gray-900 mb-1">DAR PENTRU MOLDOVA</h4>
                         <p class="text-xs text-gray-500 text-center mb-4 uppercase tracking-wide">Companie</p>
@@ -727,13 +1054,13 @@
     <!-- Assistant Avatar -->
     <div id="assistantContainer" class="assistant-container">
         <div class="social-icons">
-            <div class="social-item"><b class="social-label">WhatsApp</b><a href="https://wa.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="whatsapp.png" alt="WhatsApp"></a></div>
-            <div class="social-item"><b class="social-label">Telegram</b><a href="https://t.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="telegram.png" alt="Telegram"></a></div>
-            <div class="social-item"><b class="social-label">Viber</b><a href="viber://chat?number=%2B37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="viber.png" alt="Viber"></a></div>
+            <div class="social-item"><b class="social-label">WhatsApp</b><a href="https://wa.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="whatsapp.png" alt="Contactează evacuator prin WhatsApp - asistență rapidă 24/7"></a></div>
+            <div class="social-item"><b class="social-label">Telegram</b><a href="https://t.me/37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="telegram.png" alt="Contactează evacuator prin Telegram - răspuns instant"></a></div>
+            <div class="social-item"><b class="social-label">Viber</b><a href="viber://chat?number=%2B37368223614" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="viber.png" alt="Contactează evacuator prin Viber - servicii non-stop"></a></div>
         </div>
         <div id="assistantAvatar" class="assistant-avatar">
             <div id="comicBubble" class="comic-bubble">Contactează asistentul digital</div>
-            <div class="rotating-border"><div class="relative w-16 h-16 rounded-full border-4 border-orange-500 p-1 bg-white" style="z-index: 2;"><img src="avatar1.png" alt="Avatar Asistent" class="rounded-full"><div class="dot"></div></div></div>
+            <div class="rotating-border"><div class="relative w-16 h-16 rounded-full border-4 border-orange-500 p-1 bg-white" style="z-index: 2;"><img src="avatar1.png" alt="Asistent digital evacuator2424 - suport clienți online"><div class="dot"></div></div></div>
         </div>
     </div>
     
@@ -976,6 +1303,13 @@
             // Populate the Origin (Point A) dropdown from the manifest file
             async function populateOrigins() {
                 try {
+                    // Check if we're running on file:// protocol
+                    if (window.location.protocol === 'file:') {
+                        console.warn('Site-ul rulează în modul file://. Pentru funcționalitate completă, vă rugăm să folosiți un server local (ex: Live Server).');
+                        pointA_Trigger.querySelector('span').textContent = 'Folosiți modul manual';
+                        return;
+                    }
+                    
                     const response = await fetch('Resources/Distances/_manifest.json');
                     if (!response.ok) throw new Error('Nu s-au putut încărca originile.');
                     const origins = await response.json();
@@ -990,9 +1324,8 @@
                         pointA_OptionsContainer.appendChild(optionDiv);
                     });
                 } catch (error) {
-                    console.error('Eroare la popularea originilor:', error);
-                    pointA_Trigger.querySelector('span').textContent = 'Eroare la încărcare';
-                    pointA_Trigger.disabled = true;
+                    console.warn('Notă: Fișierele nu pot fi încărcate local. Pentru funcționalitate completă, folosiți un server web.');
+                    pointA_Trigger.querySelector('span').textContent = 'Folosiți modul manual';
                 }
             }
 
@@ -1020,8 +1353,8 @@
                     pointB_Trigger.disabled = false;
                     pointB_Trigger.querySelector('span').textContent = 'Selectați o destinație...';
                 } catch (error) {
-                     console.error('Eroare la încărcarea destinațiilor:', error);
-                     pointB_Trigger.querySelector('span').textContent = 'Eroare';
+                     console.warn('Notă: Destinațiile nu pot fi încărcate în modul offline.');
+                     pointB_Trigger.querySelector('span').textContent = 'Folosiți modul manual';
                 }
             }
 
@@ -1176,6 +1509,15 @@
                 if (!statusContainer) return;
                 const led = statusContainer.querySelector('.status-led');
                 const text = statusContainer.querySelector('span:last-child');
+                
+                // Check if we're running on file:// protocol
+                if (window.location.protocol === 'file:') {
+                    const demoInfo = statusMap['disponibil'];
+                    led.className = `status-led ${demoInfo.color} ${demoInfo.ledClass}`;
+                    text.textContent = demoInfo.text + ' (Demo)';
+                    return;
+                }
+                
                 try {
                     const response = await fetch(`driver${driverId}.json?v=${new Date().getTime()}`);
                     if (!response.ok) throw new Error('Network response was not ok.');
@@ -1184,10 +1526,10 @@
                     led.className = `status-led ${statusInfo.color} ${statusInfo.ledClass}`;
                     text.textContent = statusInfo.text;
                 } catch (error) {
-                    console.error(`Could not fetch status for driver ${driverId}:`, error);
-                    const errorInfo = statusMap['default'];
-                    led.className = `status-led ${errorInfo.color}`;
-                    text.textContent = 'Eroare';
+                    console.warn('Notă: Status-ul șoferului nu poate fi verificat în modul offline.');
+                    const demoInfo = statusMap['disponibil'];
+                    led.className = `status-led ${demoInfo.color} ${demoInfo.ledClass}`;
+                    text.textContent = demoInfo.text + ' (Demo)';
                 }
             }
             updateDriverStatus();
