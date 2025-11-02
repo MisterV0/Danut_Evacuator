@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evacuator non stop in Chisinau si suburbii</title>
+    
+    <!-- Meta Tags pentru SEO -->
+    <meta name="description" content="Evacuator profesional 24/7 în Chișinău și toată Moldova. Servicii de tractare auto rapidă, transport vehicule avariate, intervenție în 30 minute. Prețuri transparente. ☎️ 068223614">
+    <meta name="keywords" content="evacuator chisinau, evacuator chișinău, tractare auto moldova, evacuator 24/7, evacuator non stop, servicii evacuator, transport auto, tractare auto chisinau, tractare auto chișinău, evacuator rapid, evacuator profesional, transport vehicule avariate, evacuator suburbii, evacuator international, internațional, tractare auto urgenta, tractare auto urgență, pret evacuator, preț evacuator, tarif evacuator, evacuator ieftin, servicii tractare, platforma auto, platformă auto">
+    <meta name="author" content="evacuator2424">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Romanian">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://evacuator2424.com">
+    <meta property="og:title" content="Evacuator2424 - Tractare Auto 24/7 în Moldova">
+    <meta property="og:description" content="Servicii profesionale de evacuator în toată Moldova. Intervenție rapidă în 30 minute, prețuri clare și transparente. Disponibili non-stop.">
+    <meta property="og:image" content="https://evacuator2424.com/Resources/Photo/HeroImages/HeroImage_1.jpg">
+    <meta property="og:locale" content="ro_RO">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://evacuator2424.com">
+    <meta name="twitter:title" content="Evacuator2424 - Tractare Auto 24/7 în Moldova">
+    <meta name="twitter:description" content="Servicii profesionale de evacuator în Moldova. Intervenție rapidă, prețuri transparente.">
+    <meta name="twitter:image" content="https://evacuator2424.com/Resources/Photo/HeroImages/HeroImage_1.jpg">
+    
     <link rel="icon" href="Resources/Photo/Icons/WebIcon.png" type="image/png">
-    <!-- Tailwind CSS CDN - Pentru producție, instalați Tailwind ca PostCSS plugin: https://tailwindcss.com/docs/installation -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -185,6 +207,23 @@
         .attribute-card:nth-child(4) { animation-delay: 0.2s; }
         .attribute-card:nth-child(5) { animation-delay: 0.25s; }
         
+        @media (max-width: 640px) {
+            .attribute-card { 
+                padding: 1.75rem 1.25rem;
+            }
+            .attribute-card .icon { 
+                font-size: 2.5rem; 
+                margin-bottom: 1rem; 
+            }
+            .attribute-card h4 { 
+                font-size: 1rem;
+                margin-bottom: 0.625rem;
+            }
+            .attribute-card p { 
+                font-size: 0.875rem;
+                line-height: 1.6;
+            }
+        }
         @media (min-width: 640px) {
             .attribute-card { padding: 1.75rem 1.25rem; }
             .attribute-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -320,6 +359,16 @@
         .call-us-button:hover .fa-phone { animation-play-state: paused; }
         .mobile-phone-icon { animation: shake-phone 2s ease-in-out infinite; }
         
+        @media (max-width: 640px) {
+            .call-us-button {
+                padding: 0.875rem 1.75rem;
+                font-size: 1rem;
+            }
+            .call-us-button .fa-phone {
+                font-size: 1.125rem;
+            }
+        }
+        
         @keyframes shake-phone {
             0%, 100% { transform: rotate(0); } 10%, 30%, 50%, 70% { transform: rotate(-10deg); }
             20%, 40%, 60%, 80% { transform: rotate(10deg); } 90% { transform: rotate(0); }
@@ -350,8 +399,11 @@
         }
         @media (max-width: 640px) {
             .hero-cta-button {
-                font-size: 0.875rem;
-                padding: 0.875rem 1.5rem;
+                font-size: 0.9375rem;
+                padding: 1rem 1.75rem;
+            }
+            .hero-cta-button i {
+                font-size: 1.125rem;
             }
         }
 
@@ -597,7 +649,79 @@
             cursor: grabbing;
             transition: none; /* Disable transitions while dragging */
         }
+        
+        /* Trust Signals Bar */
+        .trust-bar {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .trust-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .trust-item:nth-child(1) { animation-delay: 0.1s; }
+        .trust-item:nth-child(2) { animation-delay: 0.2s; }
+        .trust-item:nth-child(3) { animation-delay: 0.3s; }
+        .trust-item:nth-child(4) { animation-delay: 0.4s; }
+        .trust-number {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        @media (max-width: 640px) {
+            .trust-bar {
+                padding: 1.5rem 1rem;
+            }
+            .trust-item {
+                padding: 0.5rem;
+            }
+            .trust-number {
+                font-size: 1.25rem;
+            }
+        }
     </style>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Evacuator2424",
+      "image": "https://evacuator2424.com/Resources/Photo/Icons/WebIcon.png",
+      "description": "Servicii profesionale de evacuator 24/7 în Chișinău și Moldova. Tractare auto rapidă, transport vehicule, intervenție în 30 minute.",
+      "telephone": "+373-68-223614",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Chișinău",
+        "addressCountry": "MD"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 47.0105,
+        "longitude": 28.8638
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "priceRange": "$$",
+      "url": "https://evacuator2424.com",
+      "sameAs": [
+        "https://www.instagram.com/danu.mihalachi/",
+        "https://www.facebook.com/mihalachi.danu.9"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "2"
+      }
+    }
+    </script>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
@@ -624,12 +748,12 @@
             </nav>
 
             <!-- Mobile Right-Side Controls -->
-            <div class="lg:hidden flex items-center space-x-4">
-                <a href="tel:068223614" class="text-gray-800 hover:text-blue-800">
-                    <i class="fas fa-phone text-2xl mobile-phone-icon"></i>
+            <div class="lg:hidden flex items-center space-x-3 sm:space-x-4">
+                <a href="tel:068223614" class="text-gray-800 hover:text-orange-500 transition-colors p-2 sm:p-2.5 bg-orange-50 rounded-full">
+                    <i class="fas fa-phone text-xl sm:text-2xl mobile-phone-icon"></i>
                 </a>
-                <button id="mobile-menu-button" class="text-gray-800 hover:text-blue-800 focus:outline-none">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button id="mobile-menu-button" class="text-gray-800 hover:text-blue-800 focus:outline-none p-1">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -697,37 +821,39 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                         </span>
-                        <span class="text-xs font-semibold text-gray-700 tracking-wide">DISPONIBIL 24/7</span>
+                        <span class="text-xs sm:text-sm font-semibold text-gray-700 tracking-wide">DISPONIBIL 24/7</span>
                     </div>
                     
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 leading-tight tracking-tight">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 leading-tight tracking-tight px-2">
                         Platformă disponibilă
                         <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-blue-600 mt-1">
                             în toată Moldova
                         </span>
                     </h2>
                     
-                    <p class="text-sm sm:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto leading-relaxed px-4">
                         Tractări profesionale, intervenție rapidă, tarife transparente
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center items-stretch max-w-md mx-auto">
-                        <a href="tel:068223614" class="hero-cta-button flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3.5 px-6 rounded-full text-sm transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 border border-orange-400/30 backdrop-blur-sm">
-                            <i class="fas fa-phone-alt text-base"></i>
-                            <span class="whitespace-nowrap">Sună: 068223614</span>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch max-w-md mx-auto px-4">
+                        <a href="tel:068223614" class="hero-cta-button flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3.5 sm:py-4 px-6 sm:px-7 rounded-full text-sm sm:text-base transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 sm:gap-3 border border-orange-400/30 backdrop-blur-sm">
+                            <i class="fas fa-phone-alt text-base sm:text-lg"></i>
+                            <span class="whitespace-nowrap font-bold">Sună: 068223614</span>
                         </a>
-                        <a href="#" data-section="calculator" class="hero-cta-button flex-1 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3.5 px-6 rounded-full text-sm transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 border-2 border-gray-200 backdrop-blur-sm nav-link">
-                            <i class="fas fa-calculator text-base"></i>
+                        <a href="#" data-section="calculator" class="hero-cta-button flex-1 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3.5 sm:py-4 px-6 sm:px-7 rounded-full text-sm sm:text-base transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-md inline-flex items-center justify-center gap-2 sm:gap-3 border-2 border-gray-200 backdrop-blur-sm nav-link">
+                            <i class="fas fa-calculator text-base sm:text-lg"></i>
                             <span>Calculator</span>
                         </a>
                     </div>
                     
-                    <div class="mt-5 flex items-center justify-center gap-4 text-xs text-gray-500">
+                    <div class="mt-5 sm:mt-6 flex items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-500">
                         <div class="flex items-center gap-1.5">
+                            <i class="fas fa-clock text-green-600"></i>
                             <span>Răspuns în 5 min</span>
                         </div>
                         <div class="w-1 h-1 rounded-full bg-gray-300"></div>
                         <div class="flex items-center gap-1.5">
+                            <i class="fas fa-star text-yellow-400"></i>
                             <span>100% Satisfacție</span>
                         </div>
                     </div>
@@ -735,7 +861,7 @@
                 <div class="mt-10 md:mt-14 mb-8 md:mb-10">
                     <div class="text-center mb-8 md:mb-10">
                         <span class="inline-block px-4 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-full mb-3 border border-green-100">
-                            AVANTAJELE NOASTRE
+                            DE CE NOI?
                         </span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
@@ -753,12 +879,6 @@
             <a id="servicii" class="anchor"></a>
             <div class="container mx-auto px-4 lg:px-10 py-8 lg:py-10">
                 <div class="text-center mb-8 md:mb-10">
-                    <span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full mb-3 border border-blue-100">
-                        SERVICII COMPLETE
-                    </span>
-                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                        Ce oferim
-                    </h2>
                     <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
                         Soluții profesionale de tractare și transport pentru toate nevoile tale
                     </p>
@@ -816,9 +936,6 @@
             <a id="galerie" class="anchor"></a>
             <div class="container mx-auto px-4 lg:px-10 py-8 lg:py-10">
                 <div class="text-center mb-6 md:mb-8">
-                    <span class="inline-block px-4 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-full mb-3 border border-purple-100">
-                        GALERIE PROIECTE
-                    </span>
                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
                         Cazuri reale ale clienților
                     </h2>
@@ -1219,7 +1336,7 @@
             let currentSlide = 0, autoSlideInterval;
             const updateSlides = () => { slides.forEach((s, i) => { s.classList.remove('active', 'prev', 'next', 'hidden-prev', 'hidden-next'); if (i === currentSlide) s.classList.add('active'); else if (i === (currentSlide - 1 + slides.length) % slides.length) s.classList.add('prev'); else if (i === (currentSlide + 1) % slides.length) s.classList.add('next'); else if (i === (currentSlide - 2 + slides.length) % slides.length) s.classList.add('hidden-prev'); else s.classList.add('hidden-next'); }); };
             const nextSlide = () => { currentSlide = (currentSlide + 1) % slides.length; updateSlides(); };
-            const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 10000); };
+            const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 7500); };
             document.querySelector('.arrow-right').addEventListener('click', () => { nextSlide(); clearInterval(autoSlideInterval); startAutoSlide(); });
             document.querySelector('.arrow-left').addEventListener('click', () => { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSlides(); clearInterval(autoSlideInterval); startAutoSlide(); });
             updateSlides(); startAutoSlide();
@@ -1269,7 +1386,7 @@
                             }
                         };
                         
-                        serviceCarouselInterval = setInterval(advanceCarousel, 10000);
+                        serviceCarouselInterval = setInterval(advanceCarousel, 7500);
                     }
                 };
 
